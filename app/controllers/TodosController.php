@@ -1,5 +1,7 @@
 <?php
 namespace controllers;
+use Ubiquity\attributes\items\router\Get;
+use Ubiquity\attributes\items\router\Post;
 use Ubiquity\attributes\items\router\Route;
 use Ubiquity\controllers\Router;
 use Ubiquity\utils\http\URequest;
@@ -19,9 +21,9 @@ class TodosController extends ControllerBase{
         $this->menu();
     }
 
-    #[Route(path: "_default",name: "home")]
+    #[Route(path: "_default",name: "todos.home")]
 	public function index(){
-        if(USession::exist(self::LIST_SESSION_KEY)) {
+        if(USession::exists(self::LIST_SESSION_KEY)) {
             $list = USession::get(self::LIST_SESSION_KEY);
             return $this->displayList($list);
         }
@@ -32,14 +34,10 @@ class TodosController extends ControllerBase{
 
 
 	#[Get(path: "todos/delete/{index}",name: "todos.delete")]
-	public function deleteElement($index){
-		
-	}
+	public function deleteElement($index){}
 
 	#[Post(path: "todos/edit/{index}",name: "todos.edit")]
-	public function editElement($index){
-		
-	}
+	public function editElement($index){}
 
 	#[Post(path: "todos/add/", name: "todos.add")]
 	public function addElement(){
@@ -62,36 +60,28 @@ class TodosController extends ControllerBase{
 	}
 
 	#[Get(path: "todos/loadList/{uniquid}",name: "todos.loadList")]
-	public function loadList($uniquid){
-		
-	}
+	public function loadList($uniquid){}
 
 	#[Post(path: "todos/loadList/",name: "todos.loadListPost")]
-	public function loadListFromForm(){
-		
-	}
+	public function loadListFromForm(){}
 
 	#[Get(path: "todos/new/{force}",name: "todos.new")]
-	public function newlist($force=false){
-		
-	}
+	public function newlist($force=false){}
 
 	#[Get(path: "todos/saveList/",name: "todos.save")]
-	public function saveList(){
-		
-	}
+	public function saveList(){}
 
 
 	private function menu() {
-        $this->loadView('TodosControllerView/index.html');
+        $this->loadView('TodosController/index.html');
     }
 
     private function displayList(array $list) {
-        $this->loadView('TodosControllerView/displayList.html',['list'=>$list]);
+        $this->loadView('TodosController/displayList.html',['list'=>$list]);
     }
 
     private function showMessage(string $header, string $message, string $type='info', string $icon='info circle', array $buttons=[]) {
-        $this->loadView('TodosControllerView/showMessage.html'.
+        $this->loadView('TodosController/showMessage.html'.
             compact('header', 'type', 'icon', 'message','buttons'));
     }
 }
