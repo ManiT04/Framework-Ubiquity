@@ -82,6 +82,6 @@ class TodosController extends ControllerBase{
 
     private function showMessage(string $header, string $message, string $type='info', string $icon='info circle', array $buttons=[]) {
         $this->loadView('TodosController/showMessage.html'.
-            compact('header', 'type', 'icon', 'message','buttons'));
+            compact('header','type', 'icon', 'message','buttons'));
     }
 }
