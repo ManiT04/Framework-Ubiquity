@@ -94,12 +94,12 @@ class TodosController extends ControllerBase{
             //$this->jquery->show('._editList','','',immediatly: true);
         }
         $this->jquery->change('#multiple','$("._form").toggle();'); //#multiple (saisie multiple) est l'élément d'id multiple ds index, s'i 'il change les elmt de form (._form pr avoir le form) bascule en visible/invisible
-        //$this->loadView('TodosController/displayList.html',['list'=>$list]);
-        $this->jquery->renderView('TodosController/displayList.html',['list'=>$list]); //différence entre renderView et loadView : render fait la compilation du script HTML et passe un script_foot au HTML
-
         $js = 'let $item=$(event.target).closest("div.item");$item.children(".toToggle").toggle();';
         $this->jquery->click('._toEdit', $js,true,true);
-        //$this->jquery->click('._toEdit','$("._toEdit").toggle();');
+
+
+        //$this->loadView('TodosController/displayList.html',['list'=>$list]);
+        $this->jquery->renderView('TodosController/displayList.html',['list'=>$list]); //différence entre renderView et loadView : render fait la compilation du script HTML et passe un script_foot au HTML
     }
 
     private function showMessage(string $header, string $message, string $type='info', string $icon='info circle', array $buttons=[]) {
