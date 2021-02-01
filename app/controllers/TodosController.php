@@ -9,6 +9,7 @@ use Ubiquity\utils\http\USession;
 
 /**
  * Controller TodosController
+ * @property \Ajax\php\ubiquity\JsUtils $jquery //permet d'avoir de la complétion de code sur une var : $this : jquery apparait
  **/
 class TodosController extends ControllerBase{
     const CACHE_KEY = 'datas/lists/';
@@ -39,6 +40,16 @@ class TodosController extends ControllerBase{
     #[Post(path: "todos/edit/{index}",name: "todos.edit")]
     public function editElement($index){}
 
+    #[Get(path: "todos/saveList/",name: "todos.save")]
+    public function saveList(){}
+
+    #[Get(path: "todos/loadList/{uniquid}",name: "todos.loadList")]
+    public function loadList($uniquid){}
+
+    #[Post(path: "todos/loadList/",name: "todos.loadListPost")]
+    public function loadListFromForm(){}
+
+
     #[Post(path: "todos/add/", name: "todos.add")]
     public function addElement(){
         /*$list=USession::get(self::LIST_SESSION_KEY);
@@ -47,37 +58,33 @@ class TodosController extends ControllerBase{
         $this->displayList($list);*/
 
         $list=USession::get(self::LIST_SESSION_KEY);
-        if(URequest::has('elements')) {
+        if(URequest::has('elements')) { //Modifie l'élément de la liste à l'index si il existe
             $elements=explode("\n",URequest::post('elements'));
             foreach($elements as $elm) {
                 $list[]=$elm;
             }
         } else {
-            $list[]= URequest::post('element');
+            $list[]= URequest::post('element'); //Récupère les données du POST
         }
-        USession::set(self::LIST_SESSION_KEY,$list);
-        $this->displayList($list);
+        USession::set(self::LIST_SESSION_KEY,$list); //Récupère la liste en session
+        $this->displayList($list); //Affiche la liste
     }
 
-    #[Get(path: "todos/loadList/{uniquid}",name: "todos.loadList")]
-    public function loadList($uniquid){}
-
-    #[Post(path: "todos/loadList/",name: "todos.loadListPost")]
-    public function loadListFromForm(){}
-
     #[Get(path: "todos/new/{force}",name: "todos.new")]
-    public function newlist($force=false){}
-
-    #[Get(path: "todos/saveList/",name: "todos.save")]
-    public function saveList(){}
-
+    public function newlist($force=false){
+        USession::set(self::LIST_SESSION_KEY,[]);
+        $this->displayList([]);
+    }
 
     private function menu() {
         $this->loadView('TodosController/index.html');
     }
 
-    private function displayList(array $list) {
-        $this->loadView('TodosController/displayList.html',['list'=>$list]);
+    private function displayList($list) {
+        $this->jquery->change('#multiple','$("._form").toggle();'); //#multiple (saisie multiple) est l'élément d'id multiple ds index, s'i 'il change les elmt de form (._form pr avoir le form) bascule en visible/invisible
+        //$this->loadView('TodosController/displayList.html',['list'=>$list]);
+        $this->jquery->renderView('TodosController/displayList.html',['list'=>$list]);
+        //différence entre renderView et loadView : render fait la compilation du script HTML et passe un script_foot au HTML
     }
 
     private function showMessage(string $header, string $message, string $type='info', string $icon='info circle', array $buttons=[]) {
