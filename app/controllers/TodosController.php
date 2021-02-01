@@ -31,6 +31,7 @@ class TodosController extends ControllerBase{
 
         $this->showMessage('Bienvenue !','TodoLists permet de gérer des listes...','info','info circle',
             [['url'=> Router::path('todos.new'),'caption'=>'Créer une nouvelle liste','style'=>'basic inverted']]);
+
     }
 
 
@@ -52,14 +53,14 @@ class TodosController extends ControllerBase{
 
     #[Post(path: "todos/add/", name: "todos.add")]
     public function addElement(){
-        /*$list=USession::get(self::LIST_SESSION_KEY);
+       /* $list=USession::get(self::LIST_SESSION_KEY); //que la saisie seule
         $list[]=URequest::post('element');
         USession::set(self::LIST_SESSION_KEY,$list);
         $this->displayList($list);*/
 
-        $list=USession::get(self::LIST_SESSION_KEY);
-        if(URequest::has('elements')) { //Modifie l'élément de la liste à l'index si il existe
-            $elements=explode("\n",URequest::post('elements'));
+        $list=USession::get(self::LIST_SESSION_KEY); //saisie seule et multiple
+        if(URequest::filled('elements')) { //Récupère les données du POST
+            $elements=explode("\n",URequest::post('elements')); //Modifie l'élément de la liste à l'index si il existe
             foreach($elements as $elm) {
                 $list[]=$elm;
             }
@@ -81,6 +82,9 @@ class TodosController extends ControllerBase{
     }
 
     private function displayList($list) {
+        if(\count($list)>0){
+            $this->jquery->show('._saveList','','',immediatly: true);
+        }
         $this->jquery->change('#multiple','$("._form").toggle();'); //#multiple (saisie multiple) est l'élément d'id multiple ds index, s'i 'il change les elmt de form (._form pr avoir le form) bascule en visible/invisible
         //$this->loadView('TodosController/displayList.html',['list'=>$list]);
         $this->jquery->renderView('TodosController/displayList.html',['list'=>$list]);

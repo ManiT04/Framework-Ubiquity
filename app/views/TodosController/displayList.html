@@ -3,8 +3,10 @@
         {% for item in list %}
         <div class="item">
             {{ item }}
+            <a href="{{ path('todos.delete',[loop.index()]) }}"></a>
         </div>
         {% endfor %}
+
         <div class="item">
             <form class="ui inline iverted form" action="{{ path('todos.add') }}" method="post">
                 <div class="two fields _form" style="display: none">
