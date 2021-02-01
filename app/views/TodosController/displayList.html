@@ -1,23 +1,40 @@
 <div class="ui inverted segment">
     <div class="ui inverted relaxed divided list">
         {% for item in list %}
+
         <div class="item">
-            <input type="checkbox" name="example" id="example"> //checkbox devant chq éléments
-            {{ item }}
-            <span class="ui circular mini icon inverted button right floated _toEdit"> //bt edit
-                    <i class="ui edit icon"></i>
-            </span>
-            <span class="ui circular mini icon inverted red button right floated _toEdit"> //bt delete
+            <!--<form style="display: none;" class="ui inverted left floated form" action="todos/edit/loop.index0" method="post"> input txt pr edit-->
+            <form class="ui inverted left floated form" action="todos/edit/loop.index0" method="post" >
+                <div class="ui inverted mini input" style="display: none;" > <!--input txt cache-->
+                    <input type="text" name="elements" value="{{ item }}">
+                </div>
+            </form>
+
+            <div class="ui inverted checkbox" > <!--checkbox devant chq éléments-->
+                <input type="checkbox" name="example" id="elementEdit">
+                <label class="_element" for="elementEdit" data-index="loop.index0">
+                   {{ item }}
+                </label>
+            </div>
+
+            <a href="todos/delete/loop.index0"> <!--pr bt delete-->
+                <span class="ui circular mini icon inverted red button right floated _toEdit"> <!--bt delete-->
                     <i class="ui times icon"></i>
+                </span>
+            </a>
+
+            <span class="ui circular mini icon inverted button right floated _toEdit"> <!--bt edit-->
+                <i class="ui edit icon"></i>
             </span>
+        </div> <!--fin item-->
 
+        <!--<a href="{{ path('todos.delete',[loop.index()]) }}"></a>-->
 
-            <a href="{{ path('todos.delete',[loop.index()]) }}"></a>
-        </div>
         {% endfor %}
 
+
         <div class="item">
-            <form class="ui inline iverted form" action="{{ path('todos.add') }}" method="post">
+            <form class="ui inline inverted form" action="{{ path('todos.add') }}" method="post">
 
                 <div class="two fields _form" style="display: none">
                     <textarea placeholder="Saisir vos éléments sur chaque ligne" name="elements" rows="5"></textarea>
@@ -26,9 +43,10 @@
                 <div class="field _form">
                     <input placeholder="Nouvel élément" name="element">
                 </div>
-
             </form>
-        </div>
+        </div> <!--fin item-->
+
+
     </div>
 </div>
 
