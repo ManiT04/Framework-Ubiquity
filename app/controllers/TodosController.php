@@ -38,9 +38,6 @@ class TodosController extends ControllerBase{
     #[Get(path: "todos/delete/{index}",name: "todos.delete")]
     public function deleteElement($index){}
 
-    #[Post(path: "todos/edit/{index}",name: "todos.edit")]
-    public function editElement($index){}
-
     #[Get(path: "todos/saveList/",name: "todos.save")]
     public function saveList(){}
 
@@ -50,6 +47,16 @@ class TodosController extends ControllerBase{
     #[Post(path: "todos/loadList/",name: "todos.loadListPost")]
     public function loadListFromForm(){}
 
+    #[Post(path: "todos/edit/{index}",name: "todos.edit")]
+    public function editElement($index){
+        $list=USession::get(self::LIST_SESSION_KEY); //Récupère la liste en session
+        $list[]=URequest::post('element'); //Récupère les données du POST
+        if(USession::exists(self::ACTIVE_LIST_SESSION_ID)){  //Teste l'existance de la clé ACTIVE_LIST_SESSION_ID
+            $list=USession::set(self::ACTIVE_LIST_SESSION_ID,$index); //Modifie une valeur à la position index
+        }
+
+        $this->displayList($list); //Ajoute l'élément dans la liste
+    }
 
     #[Post(path: "todos/add/", name: "todos.add")]
     public function addElement(){
@@ -60,9 +67,9 @@ class TodosController extends ControllerBase{
 
         $list=USession::get(self::LIST_SESSION_KEY); //saisie seule et multiple
         if(URequest::filled('elements')) { //Récupère les données du POST
-            $elements=explode("\n",URequest::post('elements')); //Modifie l'élément de la liste à l'index si il existe
+            $elements=explode("\n",URequest::post('elements'));
             foreach($elements as $elm) {
-                $list[]=$elm;
+                $list[]=$elm; //Ajoute l'élément dans la liste
             }
         } else {
             $list[]= URequest::post('element'); //Récupère les données du POST
@@ -84,6 +91,7 @@ class TodosController extends ControllerBase{
     private function displayList($list) {
         if(\count($list)>0){
             $this->jquery->show('._saveList','','',immediatly: true);
+            $this->jquery->show('._editList','','',immediatly: true);
         }
         $this->jquery->change('#multiple','$("._form").toggle();'); //#multiple (saisie multiple) est l'élément d'id multiple ds index, s'i 'il change les elmt de form (._form pr avoir le form) bascule en visible/invisible
         //$this->loadView('TodosController/displayList.html',['list'=>$list]);

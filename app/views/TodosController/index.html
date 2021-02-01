@@ -2,22 +2,16 @@
     <a href="{{  path('todos.home') }}" class="active item">Accueil</a>
     <a href="{{  path('todos.new') }}" class="item">Nouvelle liste</a>
     <a href="{{  path('todos.save') }}" class="item _saveList" style="display: none;">Sauvegarder liste</a>
+    <a href="{{  path('todos.edit') }}" class="item _editList" style="display: none;">Modifier liste</a>
     <div class="right menu">
         <div class="item">
             <div class="ui inverted toggle checkbox _multiple">
                 <input type="checkbox" id="multiple">
                 <label for="multiple">Saisie multiple</label>
             </div>
-            <!--<form class="form-inline my-2 my-lg-0">
-                <input type="search" placeholder="insert list id" name="searchbar" id="searchbar" class="form-control mr-sm-2">
-                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-
-            </form>-->
-
-            <div class="input-group">
-                <input type="search" class="form-control rounded" placeholder="List id" aria-label="Search"
-                       aria-describedby="search-addon" />
-                <button type="button" class="btn btn-outline-primary">search</button>
+            <div class="ui action input">
+                <input type="text" placeholder="List id">
+                <button class="ui button">Ouvrir</button>
             </div>
 
         </div>
