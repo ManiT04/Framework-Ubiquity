@@ -37,17 +37,11 @@ class TodosController extends ControllerBase{
 
     #[Get(path: "todos/delete/{index}",name: "todos.delete")]
     public function deleteElement($index){
-        USession::delete(self::ACTIVE_LIST_SESSION_ID,$index);
-
         $list=USession::get(self::LIST_SESSION_KEY);
-        if(URequest::filled('elements')) { //Si c'est pas vide
-            $elements=explode("\n",URequest::post('elements')); //récupère les donner et les spépare
-            foreach($elements as $elm) {
-                $list[]=$elm; //Ajoute l'élément dans la liste
-            }
-        } else {
-            $list[]= URequest::post('element'); //Récupère les données du POST
+        if(USession::exists(self::ACTIVE_LIST_SESSION_ID)){  //Teste l'existance de la clé ACTIVE_LIST_SESSION_ID
+            USession::delete(self::ACTIVE_LIST_SESSION_ID,$index);
         }
+
         USession::set(self::LIST_SESSION_KEY,$list); //Récupère la liste en session
         $this->displayList($list); //Affiche la liste
     }
