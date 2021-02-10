@@ -38,14 +38,22 @@ class TodosController extends ControllerBase{
     #[Get(path: "todos/delete/{index}",name: "todos.delete")]
     public function deleteElement($index){}
 
-    #[Get(path: "todos/saveList/",name: "todos.save")]
-    public function saveList(){}
-
     #[Get(path: "todos/loadList/{uniquid}",name: "todos.loadList")]
     public function loadList($uniquid){}
 
     #[Post(path: "todos/loadList/",name: "todos.loadListPost")]
     public function loadListFromForm(){}
+
+    #[Get(path: "todos/saveList/",name: "todos.save")]
+    public function saveList(){
+        $list=USession::get(self::LIST_SESSION_KEY); //Récupère la liste en session
+        $list[]=URequest::post('element'); //Récupère les données du POST
+        if(USession::exists(self::ACTIVE_LIST_SESSION_ID)){  //Teste l'existance de la clé ACTIVE_LIST_SESSION_ID
+
+        }
+
+        $this->displayList($list); //Ajoute l'élément dans la liste
+    }
 
     #[Post(path: "todos/edit/{index}",name: "todos.edit")]
     public function editElement($index){
