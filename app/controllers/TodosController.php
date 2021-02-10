@@ -36,7 +36,21 @@ class TodosController extends ControllerBase{
 
 
     #[Get(path: "todos/delete/{index}",name: "todos.delete")]
-    public function deleteElement($index){}
+    public function deleteElement($index){
+        USession::delete(self::ACTIVE_LIST_SESSION_ID,$index);
+
+        $list=USession::get(self::LIST_SESSION_KEY);
+        if(URequest::filled('elements')) { //Si c'est pas vide
+            $elements=explode("\n",URequest::post('elements')); //récupère les donner et les spépare
+            foreach($elements as $elm) {
+                $list[]=$elm; //Ajoute l'élément dans la liste
+            }
+        } else {
+            $list[]= URequest::post('element'); //Récupère les données du POST
+        }
+        USession::set(self::LIST_SESSION_KEY,$list); //Récupère la liste en session
+        $this->displayList($list); //Affiche la liste
+    }
 
     #[Get(path: "todos/loadList/{uniquid}",name: "todos.loadList")]
     public function loadList($uniquid){}
@@ -62,20 +76,21 @@ class TodosController extends ControllerBase{
         if(USession::exists(self::ACTIVE_LIST_SESSION_ID)){  //Teste l'existance de la clé ACTIVE_LIST_SESSION_ID
             $list=USession::set(self::ACTIVE_LIST_SESSION_ID,$index); //Modifie une valeur à la position index
         }
+        USession::set(self::LIST_SESSION_KEY,$list); //Met à jour la liste ?
+        $this->displayList($list); //Affiche la liste
 
-        $this->displayList($list); //Ajoute l'élément dans la liste
     }
 
     #[Post(path: "todos/add/", name: "todos.add")]
     public function addElement(){
-       /* $list=USession::get(self::LIST_SESSION_KEY); //que la saisie seule
-        $list[]=URequest::post('element');
-        USession::set(self::LIST_SESSION_KEY,$list);
-        $this->displayList($list);*/
+       /* $list=USession::get(self::LIST_SESSION_KEY); //récup la liste en session
+        $list[]=URequest::post('element'); //récup les données du post
+        USession::set(self::LIST_SESSION_KEY,$list); //ajoute et met à jour la liste ?
+        $this->displayList($list); //affiche la liste */
 
-        $list=USession::get(self::LIST_SESSION_KEY); //saisie seule et multiple
-        if(URequest::filled('elements')) { //Récupère les données du POST
-            $elements=explode("\n",URequest::post('elements'));
+        $list=USession::get(self::LIST_SESSION_KEY);
+        if(URequest::filled('elements')) { //Si c'est pas vide
+            $elements=explode("\n",URequest::post('elements')); //récupère les donner et les spépare
             foreach($elements as $elm) {
                 $list[]=$elm; //Ajoute l'élément dans la liste
             }
