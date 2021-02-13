@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 
+ use Ubiquity\attributes\items\router\Post;
  use Ubiquity\attributes\items\router\Route;
  use Ubiquity\orm\DAO;
  use models\Organization;
@@ -36,4 +37,21 @@ class OrgaController extends ControllerBase{
         $this->loadDefaultView();
     }
 
+    #[Post(path: "orga/add",name: "orga.add")]
+    public function add() {
+        $this->loadView("OrgaController/addFormulaire.html");
+    }
+
+    #[Post(path: "orga/update/{idOrga}",name: "orga.update")]
+    public function update($idOrga) {
+        $this->repo->insert();
+        $this->repo->update();
+        $this->loadDefaultView();
+    }
+
+    #[Post(path: "orga/delete/{idOrga}",name: "orga.delete")]
+    public function delete($idOrga) {
+        $this->repo->remove();
+        $this->loadDefaultView();
+    }
 }

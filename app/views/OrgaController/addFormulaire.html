@@ -1,0 +1,31 @@
+{% extends "OrgaController/base.html" %}
+
+{% block header %}
+    <button class="ui positive basic button">Ajouter une Organisation...</button>
+{% endblock %}
+
+{% block body %}
+    <div>
+        Nom :
+        <div class="ui input">
+            <input type="text" placeholder="Nom">
+        </div>
+    </div>
+    <div>
+        Domaine :
+        <div class="ui input">
+            <input type="text" placeholder="Domaine">
+        </div>
+    </div>
+    <div>
+        Alias :
+        <div class="ui input">
+            <input type="text" placeholder="Alias">
+        </div>
+    </div>
+
+    <div>
+        <button class="ui primary button">Valider</button>
+        <button class="ui button">Annuler</button>
+    </div>
+{% endblock %}
