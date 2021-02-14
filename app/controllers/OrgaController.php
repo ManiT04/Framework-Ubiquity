@@ -21,11 +21,13 @@ class OrgaController extends ControllerBase{
 
     #[Route('orga')]
 	public function index(){
-        $this->repo->all("",false);
-        $this->loadView("OrgaController/index.html");
-
         /*$orgas=DAO::getAll(Organization::class,"",false);
         $this->loadView("OrgaController/index.html",['orgas'=>$orgas]);*/
+
+        $this->repo->all("",false); //instance d'organisation : all
+        //$this->repo->all('',false,[],false,'orga'); //fait la même chose ms permet de choisir le nom de l'instance organisation à 'orga'
+        //$this->repo->all(included:false,viewVar: 'orga'); // pareil qu'au dessus mais en plus simple dp php8
+        $this->loadView("OrgaController/index.html");
     }
 
     #[Route(path: "orga/{idOrga}",name: "orga.getOne")]
@@ -33,7 +35,7 @@ class OrgaController extends ControllerBase{
         /*$orga=DAO::getById(Organization::class,$idOrga,['users.groupes','groupes.users']);
         $this->loadDefaultView(['orga'=>$orga]);*/
 
-        $this->repo->byId($idOrga,['users.groupes','groupes.users']);
+        $this->repo->byId($idOrga,['users.groupes','groupes.users'],viewVar: 'orgaGetOne');
         $this->loadDefaultView();
     }
 
@@ -42,7 +44,7 @@ class OrgaController extends ControllerBase{
         $orga=new Organization();
         URequest::setValuesToObject($orga);
         if(DAO::insert($orga)) {
-            //TODO afficher message insertion réussie
+            console.log("Insertion réussie");
         }
         //$this->loadView("OrgaController/addFormulaire.html");
     }
@@ -52,7 +54,7 @@ class OrgaController extends ControllerBase{
         $orga=DAO::getById(Organization::class,$idOrga);
         URequest::setValuesToObject($orga);
         if(DAO::update($orga)){
-            //TODO afficher message mise à jour réussie
+            console.log("Mise à jour réussie");
         }
         /*$this->repo->insert();
         $this->repo->update();
@@ -63,7 +65,7 @@ class OrgaController extends ControllerBase{
     public function delete($idOrga) {
         $orga=DAO::getById(Organization::class,$idOrga);
         if(DAO::remove($orga)){
-            //TODO afficher message suppression réussie
+            console.log("Suppression réussie");
         }
         /*$this->repo->remove();
         $this->loadDefaultView();*/
