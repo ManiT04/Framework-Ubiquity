@@ -39,19 +39,33 @@ class OrgaController extends ControllerBase{
 
     #[Post(path: "orga/add",name: "orga.add")]
     public function add() {
-        $this->loadView("OrgaController/addFormulaire.html");
+        $orga=new Organization();
+        URequest::setValuesToObject($orga);
+        if(DAO::insert($orga)) {
+            //TODO afficher message insertion réussie
+        }
+        //$this->loadView("OrgaController/addFormulaire.html");
     }
 
     #[Post(path: "orga/update/{idOrga}",name: "orga.update")]
     public function update($idOrga) {
-        $this->repo->insert();
+        $orga=DAO::getById(Organization::class,$idOrga);
+        URequest::setValuesToObject($orga);
+        if(DAO::update($orga)){
+            //TODO afficher message mise à jour réussie
+        }
+        /*$this->repo->insert();
         $this->repo->update();
-        $this->loadDefaultView();
+        $this->loadDefaultView();*/
     }
 
     #[Post(path: "orga/delete/{idOrga}",name: "orga.delete")]
     public function delete($idOrga) {
-        $this->repo->remove();
-        $this->loadDefaultView();
+        $orga=DAO::getById(Organization::class,$idOrga);
+        if(DAO::remove($orga)){
+            //TODO afficher message suppression réussie
+        }
+        /*$this->repo->remove();
+        $this->loadDefaultView();*/
     }
 }
