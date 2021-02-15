@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 
+ use models\Group;
  use models\User;
  use services\dao\OrgaRepository;
  use services\ui\UIGroups;
@@ -9,6 +10,7 @@ namespace controllers;
  use Ubiquity\controllers\auth\AuthController;
  use Ubiquity\controllers\auth\WithAuthTrait;
  use Ubiquity\orm\DAO;
+ use Ubiquity\utils\http\USession;
 
  /**
  * Controller MainController
@@ -16,14 +18,9 @@ namespace controllers;
 class MainController extends ControllerBase{
 use WithAuthTrait;
 
-    #[Autowired] //pr injection
+    //#[Autowired] //pr injection
     private OrgaRepository $repo;
     private UIGroups $uiService;
-
-
-    public function getRepo(): OrgaRepository {
-        return $this->repo;
-    }
 
     public function setRepo(OrgaRepository $repo): void {
         $this->repo = $repo;
@@ -32,7 +29,6 @@ use WithAuthTrait;
 
     #[Route(path: "_default",name: "home")]
 	public function index(){
-		$this->uiService=new UIGroups($this);
         $this->jquery->renderView('MainController/index.html');
 	}
 
@@ -53,4 +49,16 @@ use WithAuthTrait;
         echo "Organisation : ".$user->getOrganization();
     }
 
+    #[Route('groups/list',name:'groups.list')]
+    public function listGroups(){
+        $idOrga=USession::get('idOrga');
+        $groups=DAO::getAll(Group::class,'idOrganization= ?',false,[$idOrga]);
+        $this->uiService->listGroups($groups);
+        $this->jquery->renderDefaultView();
+    }
+
+    public function initialize() {
+        parent::initialize();
+        $this->uiService=new UIGroups($this);
+    }
 }
