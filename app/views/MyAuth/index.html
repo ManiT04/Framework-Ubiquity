@@ -1,0 +1,46 @@
+<body>
+<div class="ui basic inverted segment">
+    <div class="ui container">
+        <!--<div class="ui inverted secondary menu">
+            <a href="" class="item">Home</a>
+            <div class="item"></div>
+        </div>-->
+    </div>
+</div>
+<div id="page-container" class="ui container">
+    <div class="ui inverted segment">
+        <form id="frm-login" class="ui inverted form" name="frm-login" method="post" action="http://127.0.0.1:8090/login/onConnect">
+            <h4 class="ui header inverted dividing">Connexion</h4>
+            <div class="two fields">
+                <div class="field required">
+                    <label for="email">Email</label>
+                    <div class="ui input">
+                        <input id="email" name="email" type="text" placeholder="Email">
+                    </div>
+                </div>
+                <div class="field required">
+                    <label for="password">Mot de passe</label>
+                    <div class="ui input">
+                        <input id="password" name="password" type="password">
+                    </div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input id="ck-remember" name="ck-remember" value="1" type="checkbox" placeholder="Remember" tabindex="0" class="hidden">
+                        <label for="ck-remember">Se souvenir de moi</label>
+                    </div>
+                </div>
+            </div>
+            <button class="ui button fluid olive ajax _connect">Se connecter à l'application</button>
+
+            <!--<div class="ui inverted divider">Connexions directes</div>
+            <br>
+            <a href="login/direct/benjamin.sherman/" class="ui button red">benjamin.sherman</a>-->
+
+        </form>
+    </div>
+</div>
+
+</body>
