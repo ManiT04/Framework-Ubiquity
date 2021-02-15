@@ -1,22 +1,22 @@
 <?php
 namespace controllers;
 
- use models\User;
- use Ubiquity\attributes\items\router\Route;
- use Ubiquity\orm\DAO;
- use Ubiquity\utils\http\URequest;
- use Ubiquity\utils\http\UResponse;
- use Ubiquity\utils\http\USession;
+use models\User;
+use Ubiquity\attributes\items\router\Route;
+use Ubiquity\orm\DAO;
+use Ubiquity\utils\flash\FlashMessage;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\UResponse;
+use Ubiquity\utils\http\USession;
 
- #[Route(path:"/login",inherited: true,automated: true)]
-class MyAuth extends Ubiquity\controllers\auth\AuthController{
+#[Route(path:"/login",inherited: true,automated: true)]
+class MyAuth extends \Ubiquity\controllers\auth\AuthController{
 
-    #[Route(path: "/login/",name: "login")]
-	public function index(){
-		$this->loadDefaultView();
-	}
+    public function _getBaseRoute() { //permet de préciser le nom de la route pour ne pas prendre celui par défaut soit MyAuth
+        return '/login';
+    }
 
-    public function _displayInfoAsString() {
+    public function _displayInfoAsString() { //permet de spécifié l'info relative au user
         return true;
     }
 
@@ -38,11 +38,11 @@ class MyAuth extends Ubiquity\controllers\auth\AuthController{
 
     protected function onConnect($connected){
         $urlParts=$this->getOriginalURL();
-        USession::set($this->getUserSessionKey(),$connected);
+        USession::set($this->_getUserSessionKey(),$connected);
         if(isset($urlParts)){
             $this->_forward(implode("/",$urlParts));
         } else{
-            UResponse::header('locarion','/');
+            UResponse::header('location','/');
         }
     }
 
@@ -60,4 +60,14 @@ class MyAuth extends Ubiquity\controllers\auth\AuthController{
         }
         return;
     }
+
+    public function _isValidUser($action = null){ //override methode
+        return USession::exists($this->_getUserSessionKey());
+    }
+
+    protected function noAccessMessage(FlashMessage $fMessage){
+        $fMessage->setTitle('Accès interdit');
+        $fMessage->setContent("Vous n'êtes pas autorisé à accéder à cette ressource.");
+    }
+
 }
