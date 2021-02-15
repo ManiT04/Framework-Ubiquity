@@ -2,6 +2,9 @@
 namespace controllers;
 
  use models\User;
+ use services\dao\OrgaRepository;
+ use services\ui\UIGroups;
+ use Ubiquity\attributes\items\di\Autowired;
  use Ubiquity\attributes\items\router\Route;
  use Ubiquity\controllers\auth\AuthController;
  use Ubiquity\controllers\auth\WithAuthTrait;
@@ -13,11 +16,24 @@ namespace controllers;
 class MainController extends ControllerBase{
 use WithAuthTrait;
 
+    #[Autowired] //pr injection
+    private OrgaRepository $repo;
+    private UIGroups $uiService;
+
+
+    public function getRepo(): OrgaRepository {
+        return $this->repo;
+    }
+
+    public function setRepo(OrgaRepository $repo): void {
+        $this->repo = $repo;
+    }
+
+
     #[Route(path: "_default",name: "home")]
 	public function index(){
-        $this->jquery->getHref('a[data-target]',    //sélecteur css qui cible toutes les balise a qui contient un attribut data-target
-            parameters: ['historize'=>false,'hasLoader'=>'internal','listenerOn'=>'body']); //les liens sont convertit en lien ajax
-		$this->jquery->renderView('MainController/index.html');
+		$this->uiService=new UIGroups($this);
+        $this->jquery->renderView('MainController/index.html');
 	}
 
     protected function getAuthController(): AuthController {
