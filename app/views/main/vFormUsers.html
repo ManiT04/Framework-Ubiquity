@@ -1,4 +1,3 @@
-
 <div id="{{ formName }}-div" class="ui segment">
     {{ q['frm-user'] | raw }}
     <div class="ui divider"></div>
@@ -12,4 +11,20 @@
         Annuler
     </button>
 </div>
+
+<div id="{{ formName }}-div" class="ui segment">
+    {{ q['frm-users'] | raw }}
+    <div class="ui divider"></div>
+    <button id="validate-btn" class="ui button positive">
+        <i id="icon-bt-okay" class="icon check circle"></i>
+        Valider
+    </button>
+    &nbsp;
+    <button id="cancel-btn" class="ui button">
+        <i id="icon-bt-cancel" class="icon remove circle outline"></i>
+        Annuler
+    </button>
+</div>
+
+
 {{ script_foot|raw }}
