@@ -3,6 +3,7 @@ namespace controllers;
 
  use models\Group;
  use models\User;
+ use models\Organization;
  use services\dao\OrgaRepository;
  use services\ui\UIGroups;
  use Ubiquity\attributes\items\di\Autowired;
@@ -12,6 +13,7 @@ namespace controllers;
  use Ubiquity\controllers\auth\AuthController;
  use Ubiquity\controllers\auth\WithAuthTrait;
  use Ubiquity\orm\DAO;
+ use Ubiquity\utils\http\URequest;
  use Ubiquity\utils\http\USession;
 
  /**
@@ -80,7 +82,7 @@ use WithAuthTrait;
     #[Get('new/user', name: 'new.user')]
     public function newUser(){
         $this->uiService->newUser('frm-user');
-        $this->jquery->renderView('main/vForm.html');
+        $this->jquery->renderView('main/vForm.html',['formName'=>'frm-user']);
     }
 
     #[Post('new/user', name: 'new.userPost')]
