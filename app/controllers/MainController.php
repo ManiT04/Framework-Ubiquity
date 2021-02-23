@@ -64,6 +64,11 @@ use WithAuthTrait;
         $this->uiService=new UIGroups($this);
     }
 
+    public function showMessage(string $header,string $message,string $type = 'info',string $icon = 'info cirlce',array $buttons = []){
+        $this->loadView('MainController/showMessage.html',
+            compact('header', 'message','type', 'icon', 'buttons'));
+    }
+
     //-----------------------------------------------------------------------------------------------------------
 
     /*#[Get('new/user', name: 'new.user')]
@@ -97,11 +102,11 @@ use WithAuthTrait;
 
     #[Get('new/users', name: 'new.users')]
     public function newUsers(){
-        $this->uiService->newUser('frm-user');
-        $this->jquery->renderView('main/vForm.html',['formName'=>'frm-users']);
+        $this->uiService->newUsers('frm-users');
+        $this->jquery->renderView('main/vFormUsers.html');
     }
 
-    #[Post('new/users', name: 'new.usersPost')]
+    /*#[Post('new/users', name: 'new.usersPost')]
     public function newUsersPost(){
         $idOrga=USession::get('idOrga');
         $orga=DAO::getById(Organization::class,$idOrga,false);
@@ -116,5 +121,5 @@ use WithAuthTrait;
         }else{
             $this->showMessage("Ajout d'utilisateur","Aucun utilisateur n'a été ajouté",'error','warning circle');
         }
-    }
+    }*/
 }

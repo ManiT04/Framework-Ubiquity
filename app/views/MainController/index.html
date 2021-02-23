@@ -5,14 +5,34 @@
 <div id="response" class="ui segment"></div>
 
 
-<a href="{{ path('new.user') }}" class="ui basic olive button" data-target="#new-user">
-    <i class="plus icon"></i> Ajouter un utilisateur...
-</a>
-<div id="new-user" style="margin-top: 3px"></div>
 
-<a href="{{ path('new.user') }}" class="ui basic olive button" data-target="#new-user">
-    <i class="plus icon"></i> Ajouter des utilisateurs...
-</a>
-<div id="new-user" style="margin-top: 3px"></div>
+<div class="ui attached segment">
+    Utilisateurs
+</div>
+
+<div class="ui attached blue segment">
+    <div class="ui divided list">
+        <div class="item">
+            <a href="{{ path('new.user') }}" class="ui basic olive button" data-target="#new-user">
+                <i class="plus icon"></i> Ajouter un utilisateur...
+            </a>
+            <div id="new-user" style="margin-top: 3px"></div>
+        </div>
+
+        <div class="item">
+            <a href="{{ path('new.users') }}" class="ui basic olive button" data-target="#new-user">
+                <i class="plus icon"></i> Ajouter des utilisateurs...
+            </a>
+            <div id="new-users" style="margin-top: 3px"></div>
+        </div>
+
+        <div class="item">
+            <a href="{{ path('users') }}" class="ui basic olive button" data-target="#new-user">
+                <i class="plus icon"></i> Gérer les utilisateurs...
+            </a>
+        </div>
+    </div>
+</div>
+
 
 {{ script_foot | raw }}

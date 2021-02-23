@@ -53,10 +53,11 @@ class UIGroups extends \Ajax\php\ubiquity\UIService{
     public function newUsers($formName){
         $frm=$this->semantic->dataForm($formName,new User());
         $frm->addClass('inline');
-        //$frm->setFields(["firstname\n","lastname\n"]);
-        $frm->setCaptions(['Utilisateurs']);
-        $frm->fieldAsTextarea(4);
-        $frm->fieldAsTextareaInput("Entrez chaque utilisateurs sur une ligne \n John DOE");
+
+        $frm->setFields(["Utilisateurs"]);
+        //$frm->setCaptions(["Entrez chaque utilisateurs sur une ligne"]);
+        //$frm->fieldAsTextarea(4);
+        //$frm->fieldAsTextareaInput('Utilisateurs',['rules'=>'empty']);
 
         $this->addFormBehavior($formName,$frm,'#new-user','new.usersPost');
     }
