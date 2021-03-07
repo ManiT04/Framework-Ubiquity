@@ -102,13 +102,14 @@ use WithAuthTrait;
         }
     }
 
+
     #[Get('new/users', name: 'new.users')]
     public function newUsers(){
-        $this->uiService->newUsers('frm-users');
-        $this->jquery->renderView('main/vFormUsers.html');
+        $this->uiService->newUsers('frm-user');
+        $this->jquery->renderView('main/vFormUsers.html',['formName'=>'frm-user']);
     }
 
-    /*#[Post('new/users', name: 'new.usersPost')]
+    #[Post('new/users', name: 'new.usersPost')]
     public function newUsersPost(){
         $idOrga=USession::get('idOrga');
         $orga=DAO::getById(Organization::class,$idOrga,false);
@@ -123,5 +124,5 @@ use WithAuthTrait;
         }else{
             $this->showMessage("Ajout d'utilisateur","Aucun utilisateur n'a été ajouté",'error','warning circle');
         }
-    }*/
+    }
 }
