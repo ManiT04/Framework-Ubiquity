@@ -125,4 +125,28 @@ use WithAuthTrait;
             $this->showMessage("Ajout d'utilisateur","Aucun utilisateur n'a été ajouté",'error','warning circle');
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    #[Get('new/group', name: 'new.group')]
+    public function newGroup(){
+        $this->uiService->newGroup('frm-group');
+        $this->jquery->renderView('main/vFormGroup.html',['formName'=>'frm-group']);
+    }
+
+    #[Post('new/group', name: 'new.groupPost')]
+    public function newGroupPost(){
+        $idOrga=USession::get('idOrga');
+        $orga=DAO::getById(Organization::class,$idOrga,false);
+        $group=new Group();
+        URequest::setValuesToObject($group);
+        $group->setOrganization($orga);
+        if(DAO::insert($group)){
+            $count=DAO::count(User::class,'idOrganization= ?',[$idOrga]);
+            $this->jquery->execAtLast('$("#users-count").html("'.$count.'")'); // ?? sert à quoi
+            $this->showMessage("Ajout du groupe","Le groupe $group a été ajouté à l'organisation.",'success','check square outline');
+        }else{
+            $this->showMessage("Ajout du groupe","Aucun groupe n'a été ajouté",'error','warning circle');
+        }
+    }
 }
