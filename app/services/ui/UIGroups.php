@@ -44,7 +44,7 @@ class UIGroups extends \Ajax\php\ubiquity\UIService{
         $frm->addClass('inline');
         $frm->setFields(['firstname','lastname']);
         $frm->setCaptions(['Prénom','Nom']);
-        $frm->fieldAsLabeledInput('firstname',['rules'=>'empty']);
+        $frm->fieldAsLabeledInput('firstname',['rules'=>'empty']); //rules empty : pr dire que c'est un champ obligatoire
         $frm->fieldAsLabeledInput('lastname',['rules'=>'empty']);
         $this->addFormBehavior($formName,$frm,'new-user','new.userPost');
         //$this->addFormBehavior($formName,$frm,'#new-user','new.userPost');

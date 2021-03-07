@@ -43,7 +43,7 @@ use WithAuthTrait;
 	#[Route(path: "test/ajax",name: "main.testAjax")]
 	public function testAjax(){
         $user=DAO::getById(User::class,[1],false);
-		//var_dump($user);
+		//var_dump($user); //renvoie les données du post an ajax
 		$this->loadView('MainController/testAjax.html',['user'=>$user]);
 	}
 

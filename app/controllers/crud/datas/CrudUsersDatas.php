@@ -9,7 +9,8 @@ class CrudUsersDatas extends CRUDDatas{
 
     public function getFieldNames($model) //Retourne un tableau des membres à afficher dans le DataTable
     {
-        return parent::getFieldNames($model);
+        //return parent::getFieldNames($model); //retourne tout du model User.php
+        return ['firstname','lastname','email','suspended','groups']; //on met ce qu'on veut afficher, à partir du model User.php
     }
 
     public function getFormFieldNames($model, $instance) //Retourne un tableau des membres à afficher dans le formulaire (DataForm)

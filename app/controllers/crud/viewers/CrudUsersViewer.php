@@ -15,7 +15,9 @@ class CrudUsersViewer extends ModelViewer{
 
     public function getModelDataTable($instances, $model, $totalCount, $page = 1) //Permet de modifier les champs du DataTable avec les méthodes fieldAs…
     {
-        return parent::getModelDataTable($instances, $model, $totalCount, $page);
+        $dt = parent::getModelDataTable($instances, $model, $totalCount, $page);
+        $dt -> fieldAsLabel('groups','users'); //modifie l'apparence pour la section groups et met un icone
+        return $dt;
     }
 
     public function recordsPerPage($model, $totalCount = 0) //Retourne le nombre d'instances à afficher au maximum dans le DataTable
@@ -25,7 +27,8 @@ class CrudUsersViewer extends ModelViewer{
 
     protected function getDataTableRowButtons() //Retourne les boutons à afficher dans le DataTable (edit, display ou delete)
     {
-        return parent::getDataTableRowButtons();
+        //return parent::getDataTableRowButtons();
+        return ['display','edit','delete'];
     }
 
 // DataElement ---------------------------------------------------------------------------------------------------------
