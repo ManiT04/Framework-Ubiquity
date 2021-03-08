@@ -30,7 +30,7 @@ class MyAuth extends \Ubiquity\controllers\auth\AuthController{
                 $password = URequest::post($this->_getPasswordInputName());
                 $user = DAO::getOne(User::class, 'email= ?', false, [$email]);
                 if(isset($user)) {
-                    USession::set('idOrga', $user->getName());
+                    USession::set('idUser', $user->getName());
                     return $user;
                 }
             }

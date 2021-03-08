@@ -4,6 +4,7 @@
             <div class="ui header">
                 <div class="content">
                     <div class="header">Menu</div>
+                    <div class="item">{{ _userInfo|raw }}</div>
                 </div>
             </div>
         </div>
@@ -12,4 +13,21 @@
         </div>
     </div>
 </div>
+
+
+<!--<div class="ui olive segment">
+    <div class="ui two columns grid">
+        <div class="column">
+            <div class="ui header">
+                <a class="ui button green basic" href="{{ path('myAuth.index') }}" data-target="#page-container">Connection</a>
+                <i class="ui user icon"></i>
+                <div class="content">
+                    {{ user.name }}
+                    <div class="sub header">User</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
 {{ script_foot|raw }}
