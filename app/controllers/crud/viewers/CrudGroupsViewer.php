@@ -18,10 +18,10 @@ class CrudGroupsViewer extends ModelViewer{
     {
         $dt = parent::getModelDataTable($instances, $model, $totalCount, $page);
         $dt -> fieldAsLabel('users','users'); //modifie l'apparence pour la section groups et met un icone
-        /*$dt -> setValueFunction('users',function ($v,$instance) {
+        $dt -> setValueFunction('users',function ($v,$instance) {
             return HtmlLabel::tag('',count($v)); //label pr changer l'apparence et count pr afficher le nb de users et pas ts les users
             //return \count($v);
-        });*/
+        });
         return $dt;
     }
 

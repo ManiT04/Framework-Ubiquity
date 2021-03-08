@@ -27,7 +27,7 @@ class CrudUsersViewer extends ModelViewer{
 
     protected function getDataTableRowButtons() //Retourne les boutons à afficher dans le DataTable (edit, display ou delete)
     {
-        //return parent::getDataTableRowButtons();
+        //return parent::getDataTableRowButtons(); //celui ci n'affiche pas le display jsp pk
         return ['display','edit','delete'];
     }
 

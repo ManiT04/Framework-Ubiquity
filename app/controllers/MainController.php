@@ -113,11 +113,23 @@ use WithAuthTrait;
     public function newUsersPost(){
         $idOrga=USession::get('idOrga');
         $orga=DAO::getById(Organization::class,$idOrga,false);
-        $user=new User();
-        URequest::setValuesToObject($user);
-        $user->setEmail(\strtolower($user->getFirstname().'.'.$user->getLastname().'@'.$orga->getDomain()));
-        $user->setOrganization($orga);
-        if(DAO::insert($user)){
+        $users=URequest::post('users');
+        $userTab=explode("\n",$users);
+        foreach ($userTab as $user) {
+            $newUser = new User();
+            $user = explode("\n",$user);
+            $name = $user[0];
+            $firstname=substr($user[1],0,-1);
+
+            $newUser->setLastname($name);
+            $newUser->setFirstname($firstname);
+
+            URequest::setValuesToObject($newUser);
+            $newUser->setEmail(\strtolower($newUser->getFirstname().'.'.$newUser->getLastname().'@'.$orga->getDomain()));
+            $newUser->setOrganization($orga);
+        }
+
+        if(DAO::insert($newUser)){
             $count=DAO::count(User::class,'idOrganization= ?',[$idOrga]);
             $this->jquery->execAtLast('$("#users-count").html("'.$count.'")');
             $this->showMessage("Ajout d'utilisateur","L'utilisateur $user a été ajouté à l'organisation.",'success','check square outline');

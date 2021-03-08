@@ -26,8 +26,7 @@
         </div>
 
         <div class="item">
-            <!--Ici qu'on va utiliser le CRUD Users au lieu du path-->
-            <a href="{{ path('/users') }}" class="ui basic olive button" data-target="#new-user">
+            <a href="{{ path('crudUsers.index') }}" class="ui olive button" data-target="#new-user">
                 <i class="plus icon"></i> Gérer les utilisateurs...
             </a>
         </div>
@@ -55,7 +54,7 @@
         </div>
 
         <div class="item">
-            <a href="{{ path('/groups') }}" class="ui basic olive button" data-target="#new-group">
+            <a href="{{ path('crudGroups.index') }}" class="ui olive button" data-target="#new-group">
                 <i class="plus icon"></i> Gérer les groupes...
             </a>
         </div>
