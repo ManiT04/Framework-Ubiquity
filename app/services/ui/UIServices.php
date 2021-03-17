@@ -16,8 +16,8 @@ class UIServices extends \Ajax\php\ubiquity\UIService{
         }
     }
 
-    public function index(User $user){
-        /*$bt=$this->semantic->htmlDropdown('dd-groupes','',JArray::modelArray($user->getGroups(),'getId')); //??
+    /*public function index(User $user){
+        $bt=$this->semantic->htmlDropdown('dd-groupes','',JArray::modelArray($user->getGroups(),'getId')); //??
         $bt->setAction('hide');
         $lbl=$bt->addLabel('');
         $lbl->addClass('basic inverted black')->setProperty('style','display:none')->setIdentifier('lbl-group');
@@ -25,6 +25,6 @@ class UIServices extends \Ajax\php\ubiquity\UIService{
         $bt->setValue('Ajouter des utilisateurs au groupe...');
         $bt->addClass('olive');
         $bt->addIcon('walking');
-        $bt->asButton();*/
-    }
+        $bt->asButton();
+    }*/
 }

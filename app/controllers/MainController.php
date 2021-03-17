@@ -1,6 +1,6 @@
 <?php
 namespace controllers;
-
+use Ajax\service\JArray;
 use services\dao\UserRepository;
 use services\ui\UIServices;
 use Ubiquity\attributes\items\di\Autowired;
@@ -22,10 +22,15 @@ class MainController extends ControllerBase{
     #[Route('_default',name: 'home')]
 	public function index(){
         $u=$this->_getAuthController()->_getActiveUser();
-        $user=$this->repo->byId($u->getName(),true,false,'user');
-        $this->ui->index($user);
+        //$user=$this->repo->byId($u->getName(),true,false,'user');
+        //$this->ui->index($user);
         $this->jquery->renderView("MainController/index.html");
 	}
+
+    public function initialize() {
+        $this->ui=new UIServices($this);
+        parent::initialize();
+    }
 
     public function getRepo(): UserRepository { return $this->repo; }
 
