@@ -4,7 +4,6 @@
             <div class="ui header">
                 <div class="content">
                     <div class="header">Menu</div>
-                    <div class="item">{{ _userInfo|raw }}</div>
                 </div>
             </div>
         </div>
@@ -14,20 +13,64 @@
     </div>
 </div>
 
+<!--<div class="item">{{ _userInfo|raw }}</div>-->
 
-<!--<div class="ui olive segment">
-    <div class="ui two columns grid">
+<div>
+    <div  class="ui two column grid">
         <div class="column">
-            <div class="ui header">
-                <a class="ui button green basic" href="{{ path('myAuth.index') }}" data-target="#page-container">Connection</a>
-                <i class="ui user icon"></i>
-                <div class="content">
-                    {{ user.name }}
-                    <div class="sub header">User</div>
+            <div class="ui attached segment"><i class="shopping basket icon"></i> Store</div>
+            <div class="ui attached blue segment">
+                <div class="ui divided list">
+                    <div class="item">
+                        <a href="{{ path('new.users') }}" class="ui basic olive button" data-target="#new-users">
+                            <i class="shopping basket icon"></i> Mes commandes {{ users.orders|length }} </a><br><br>
+                        <a href="{{ path('store') }}" class="ui basic olive button" data-target="#new-users">Parcourir le store</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui attached segment"><i class="shopping cart icon"></i> Paniers</div>
+            <div class="ui attached blue segment">
+                <div class="ui divided list">
+                    <div class="item">
+                        <a href="{{ path('new.users') }}" class="ui basic olive button" data-target="#new-users">
+                            <i class="shopping cart icon"></i> Nouveau</a> <br><br>
+                        <a href="{{ path('store') }}" class="ui basic olive button" data-target="#new-users">Mes paniers {{ users.orders|length }}</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>-->
+</div>
+
+<div  class="ui one column grid">
+    <div class="column">
+        <div class="ui attached segment"><i class="tags icon"></i> Promotions en cours</div>
+        <div class="ui attached blue segment">
+            <div class="ui divided list">
+                <div class="item">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="ui one column grid">
+    <div class="column">
+        <div class="ui attached segment"><i class="bookmark icon"></i> Consultés récemment</div>
+        <div class="ui attached blue segment">
+            <div class="ui divided list">
+                <div class="item">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {{ script_foot|raw }}
+

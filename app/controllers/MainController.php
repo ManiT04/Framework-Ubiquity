@@ -1,12 +1,14 @@
 <?php
 namespace controllers;
 use Ajax\service\JArray;
+use models\Product;
 use services\dao\UserRepository;
 use services\ui\UIServices;
 use Ubiquity\attributes\items\di\Autowired;
 use Ubiquity\attributes\items\router\Route;
 use Ubiquity\controllers\auth\AuthController;
 use Ubiquity\controllers\auth\WithAuthTrait;
+use Ubiquity\orm\DAO;
 
 /**
  * Controller MainController
@@ -24,7 +26,9 @@ class MainController extends ControllerBase{
         $u=$this->_getAuthController()->_getActiveUser();
         //$user=$this->repo->byId($u->getName(),true,false,'user');
         //$this->ui->index($user);
-        $this->jquery->renderView("MainController/index.html");
+        $this->repo->byId($u->getId(),true,false,'user');
+        $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
+        $this->jquery->renderView("MainController/index.html",["promos"=>$promos]);
 	}
 
     public function initialize() {
@@ -42,4 +46,10 @@ class MainController extends ControllerBase{
     {
         return new MyAuth($this);
     }
+
+    #[Route('store',name: 'store')]
+	public function store(){
+		
+	}
+
 }
