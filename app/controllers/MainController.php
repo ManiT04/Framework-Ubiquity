@@ -67,11 +67,23 @@ class MainController extends ControllerBase{
         $this->loadDefaultView(compact('section')); //pour load tous de les éléments de la classe Section
     }
 
-    #[Route('product/{idSection}/{idProduct}',name: 'section')]
-    public function detailsProduit($id, $idP){
-        $section=DAO::getById(Section::class,$id,['products']); // ??
+    #[Route('product/{idS}/{idP}',name: 'section')]
+    public function detailsProduit($idS, $idP){
+        $section=DAO::getById(Section::class,$idS,['products']); // ??
         $product=DAO::getById(Product::class,$idP,['products']);
+
+        if(!URequest::isAjax()) {
+            $content=$this->loadDefaultView(compact('product'),true);
+            $this->store($content);
+            return;
+        }
+
         $this->loadDefaultView(compact('product')); //pour load tous de les éléments de la classe Section
     }
 
+    #[Route('product/{id}',name: 'product')]
+    public function product($id){
+        $product = DAO::getById(Product::class, $id, ['products']);
+        $this->loadView("MainController/detailsProduct.html");
+    }
 }
