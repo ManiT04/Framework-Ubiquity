@@ -1,17 +1,12 @@
-<!--<div class="ui inverted vertical menu">
-    <a class="item active">
-        Home
-    </a>
-    <a class="item">
-        Messages
-    </a>
-</div>-->
-
-<h1>{{ section.name }}</h1>
-
-{% for p in section.products %}
-    {{ p.name }}
-{% endfor %}
-
-
-{{ script_foot|raw }}
+<div class="ui attached segment"><i class="cart plus icon"></i> {{ section.name }}</div>
+<br>
+    <div class="ui four column grid">
+        {% for p in section.products %}
+            <div class="column">
+                <div class="ui segment">
+                    <a data-target="#section-details" href="{{ path("product",[section.id], p.id) }}" class="item">{{ p.name }}</a><br>
+                    <a class="ui tag label">Prix : {{ p.price }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
