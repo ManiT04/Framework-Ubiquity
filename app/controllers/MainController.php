@@ -2,6 +2,7 @@
 namespace controllers;
 use Ajax\service\JArray;
 use models\Product;
+use models\Section;
 use services\dao\UserRepository;
 use services\ui\UIServices;
 use Ubiquity\attributes\items\di\Autowired;
@@ -24,16 +25,16 @@ class MainController extends ControllerBase{
     #[Route('_default',name: 'home')]
 	public function index(){
         $u=$this->_getAuthController()->_getActiveUser();
-        //$user=$this->repo->byId($u->getName(),true,false,'user');
-        //$this->ui->index($user);
         $this->repo->byId($u->getId(),true,false,'user');
         $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
-        $this->jquery->renderView("MainController/index.html",["promos"=>$promos]);
+        //$this->jquery->renderView("MainController/index.html",["promos"=>$promos]);
+        $this->loadView("MainController/index.html",["promos"=>$promos]);
 	}
 
     public function initialize() {
         $this->ui=new UIServices($this);
         parent::initialize();
+        $this->jquery->getHref('a[data-target]','',['listenerOn'=>'body']);
     }
 
     public function getRepo(): UserRepository { return $this->repo; }
@@ -49,7 +50,16 @@ class MainController extends ControllerBase{
 
     #[Route('store',name: 'store')]
 	public function store(){
-		
+        $sections=DAO::getAll(Section::class,'',['products']);
+        //$this->jquery->renderView("MainController/store.html");
+        $this->loadDefaultView(compact('sections'));
 	}
+
+    #[Route('section/{idSection}',name: 'section')]
+    public function sectionsMenu($id){
+        $section=DAO::getById(Section::class,$id,['products']);
+        $this->jquery->renderView("MainController/sectionsMenu.html");
+       //$this->loadView("MainController/sectionsMenu.html");
+    }
 
 }

@@ -1,0 +1,17 @@
+<!--<div class="ui inverted vertical menu">
+    <a class="item active">
+        Home
+    </a>
+    <a class="item">
+        Messages
+    </a>
+</div>-->
+
+<h1>{{ section.name }}</h1>
+
+{% for p in section.products %}
+    {{ p.name }}
+{% endfor %}
+
+
+{{ script_foot|raw }}
