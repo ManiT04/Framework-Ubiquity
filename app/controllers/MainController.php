@@ -71,7 +71,6 @@ class MainController extends ControllerBase{
     public function detailsProduit($id, $idP){
         $section=DAO::getById(Section::class,$id,['products']); // ??
         $product=DAO::getById(Product::class,$idP,['products']);
-        //$this->jquery->renderView("MainController/detailsProduct.html");
         $this->loadDefaultView(compact('product')); //pour load tous de les éléments de la classe Section
     }
 
