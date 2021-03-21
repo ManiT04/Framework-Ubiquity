@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 use Ajax\service\JArray;
+use models\Basketdetail;
 use models\Product;
 use models\Section;
 use services\dao\UserRepository;
@@ -53,7 +54,8 @@ class MainController extends ControllerBase{
 	public function store($content='')
     {
         $sections = DAO::getAll(Section::class, '', ['products']);
-        $this->jquery->renderView('MainController/store.html', compact('sections', 'content')); //2eme param pour mettre chaine string et changer le contenu principal
+        $this->jquery->renderView('MainController/store.html', compact('sections', 'content'));
+        //2eme param pour mettre chaine string et changer le contenu principal
     }
 
     #[Route('section/{id}',name: 'section')]
@@ -67,6 +69,8 @@ class MainController extends ControllerBase{
         $this->loadDefaultView(compact('section')); //pour load tous de les éléments de la classe Section
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     #[Route('product/{idS}/{idP}',name: 'section')]
     public function detailsProduit($idS, $idP){
         $section=DAO::getById(Section::class,$idS,['products']); // ??
@@ -77,7 +81,6 @@ class MainController extends ControllerBase{
             $this->store($content);
             return;
         }
-
         $this->loadDefaultView(compact('product')); //pour load tous de les éléments de la classe Section
     }
 
@@ -86,4 +89,20 @@ class MainController extends ControllerBase{
         $product = DAO::getById(Product::class, $id, ['products']);
         $this->loadView("MainController/detailsProduct.html");
     }
+
+    #[Route('basket/add/{id}',name: 'add.basket')]
+    public function addBasket($id){
+        //$basket = DAO::getById(Basketdetail::class, $id, ['products']);
+        $product = DAO::getById(Product::class, $id, ['products']);
+        //$this->loadView("MainController/detailsProduct.html");
+    }
+
+    #[Route('basket/add/{idBasket}/{idProduct}',name: 'addTo.basket')]
+    public function addToBasket($idBasket, $idProduct){
+        $basket = DAO::getById(Basketdetail::class, $idBasket, ['products']);
+        $product = DAO::getById(Product::class, $idProduct, ['products']);
+        //$this->loadView("MainController/detailsProduct.html");
+    }
+
+
 }
