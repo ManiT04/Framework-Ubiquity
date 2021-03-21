@@ -35,7 +35,7 @@ class MainController extends ControllerBase{
     public function initialize() {
         $this->ui=new UIServices($this);
         parent::initialize();
-        $this->jquery->getHref('a[data-target]','',['listenerOn'=>'body','hasLoader'=>'x-internal']);
+        $this->jquery->getHref('a[data-target]','',['listenerOn'=>'body','hasLoader'=>'internal-x']);
     }
 
     public function getRepo(): UserRepository { return $this->repo; }
