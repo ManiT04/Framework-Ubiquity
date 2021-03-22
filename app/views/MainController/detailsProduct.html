@@ -1,9 +1,7 @@
 <div class="ui attached segment"><i class="cart plus icon"></i>
     {{ section.name }}
     <a class="ui teal right floated button" href="{{ path('store') }}" >Retour au store</a>
-</div>
-
-<br>
+</div><br>
 
 <div class="twelve wide stretched column">
     <div class="ui segment" id="section-details">
@@ -21,6 +19,7 @@
                         <a class="item">{{ product.name }}</a><br>
                         <a class="item">{{ product.price }} €</a><br>
                         <a href="{{ path(add.basket, [product.id]) }}" class="tiny ui teal button"><i class="shopping basket icon"></i>Panier</a>
+                        <a href="{{ path(addTo.basket, [basket.id,product.id]) }}" class="tiny ui teal basic button"><i class="shopping basket icon"></i></a>
                     </div>
                 </div>
             </div>

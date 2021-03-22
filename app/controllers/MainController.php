@@ -12,6 +12,7 @@ use Ubiquity\controllers\auth\AuthController;
 use Ubiquity\controllers\auth\WithAuthTrait;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\USession;
 
 /**
  * Controller MainController
@@ -66,7 +67,7 @@ class MainController extends ControllerBase{
             $this->store($content);
             return;
         }
-        $this->loadDefaultView(compact('section')); //pour load tous de les éléments de la classe Section
+        $this->loadDefaultView(compact('section')); //pour load tous de les éléments de la classes Section
     }
 
     #[Route('product/{idS}/{idP}',name: 'product')]
@@ -95,14 +96,18 @@ class MainController extends ControllerBase{
 
 
     //------------------------------------------------------------------------------------------------------------------
-    #[Route('basket/add/{id}',name: 'add.basket')]
+    #[Route('basket/add/{id}',name: 'add.basket')] //panier session
     public function addBasket($id){
-        //$basket = DAO::getById(Basketdetail::class, $id, ['products']);
-        $product = DAO::getById(Product::class, $id, ['products']);
-        //$this->loadView("MainController/detailsProduct.html");
+        $basketDetail = new Basketdetail();
+        $basketDetail->setIdBasket($id);
+        $basketDetail->setQuantity(1);
+        $basket = $this->getBasket();
+        $basket->addBasketDetail($basketDetail);
+        USession::set('basket',$basket);
+
     }
 
-    #[Route('basket/add/{idBasket}/{idProduct}',name: 'addTo.basket')]
+    #[Route('basket/add/{idBasket}/{idProduct}',name: 'addTo.basket')] //panier specicique
     public function addToBasket($idBasket, $idProduct){
         $basket = DAO::getById(Basketdetail::class, $idBasket, ['products']);
         $product = DAO::getById(Product::class, $idProduct, ['products']);
