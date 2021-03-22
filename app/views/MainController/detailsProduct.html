@@ -1,16 +1,42 @@
 <div class="ui attached segment"><i class="cart plus icon"></i>
-    {{ product.name }} {{ section.name }}
-    <a class="ui teal button" href="{{ path('store') }}" >Retour au store</a>
+    {{ section.name }}
+    <a class="ui teal right floated button" href="{{ path('store') }}" >Retour au store</a>
 </div>
 
-<div class="ten wide column">
-    <p>Hello</p>
-</div>
+<br>
 
-<div class="ui grid container">
-    <div class="four wide column">{{ product.name }}</div>
-    <div class="four wide column">{{ product.image }}</div>
-    <div class="four wide column">{{ product.price }}</div>
-    <div class="four wide column">{{ product.comments }}</div>
-    <div class="four wide column">{{ product.basketdetails }}</div>
+<div class="twelve wide stretched column">
+    <div class="ui segment" id="section-details">
+        <div  class="ui one column grid">
+            <div class="column">
+                <div  class="ui grid">
+
+                    <div class="eight wide column">
+                        <div class="ui large image">
+                            <img src="public/assets/img/{{product.image}}.jpg"/>
+                        </div> <br>
+                    </div>
+
+                    <div class="eight wide column">
+                        <a class="item">{{ product.name }}</a><br>
+                        <a class="item">{{ product.price }} €</a><br>
+                        <a href="{{ path(add.basket, [product.id]) }}" class="tiny ui teal button"><i class="shopping basket icon"></i>Panier</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div  class="ui one column grid">
+            <div class="column">
+                <div class="ui attached segment"><i class="bookmark icon"></i> Commentaires :</div>
+                <div class="ui attached blue segment">
+                    <div class="ui divided list">
+                        <div class="item">
+                            {{ product.comments }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

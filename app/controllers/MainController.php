@@ -69,30 +69,32 @@ class MainController extends ControllerBase{
         $this->loadDefaultView(compact('section')); //pour load tous de les éléments de la classe Section
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-
-    #[Route('product/{idS}/{idP}',name: 'section')]
+    #[Route('product/{idS}/{idP}',name: 'product')]
     public function detailsProduit($idS, $idP){
-        //$section=DAO::getById(Section::class,$idS,false,['products']); // ??
-        //$product=DAO::getById(Product::class,$idP,false,['products']);
         $section=DAO::getById(Section::class,$idS,false);
         $product=DAO::getById(Product::class,$idP,false);
 
         if(!URequest::isAjax()) { //avoir le menu
-            $content=$this->loadDefaultView(compact('product'),true);
+            $content=$this->loadView("MainController/detailsProduct.html",compact('product', 'section'),true);
             $this->store($content);
             return;
         }
-        //$this->loadDefaultView(compact('product'),["product"=>$product]);
-        $this->loadDefaultView(["product"=>$product],["section"=>$section]);
+        $this->loadView("MainController/detailsProduct.html",["product"=>$product,"section"=>$section]);
     }
-
-    #[Route('product/{id}',name: 'product')]
+//------------------------------------------------Test------------------------------------------------------------------
+    #[Route('productTest/{id}',name: 'productTest')]
     public function product($id){
-        $product = DAO::getById(Product::class, $id, ['products']);
-        $this->loadView("MainController/detailsProduct.html");
+        $product = DAO::getById(Product::class, $id, false);
+        if(!URequest::isAjax()) { //avoir le menu
+            $content=$this->loadView("MainController/detailsProduct.html",compact('product'),true);
+            $this->store($content);
+            return;
+        }
+        $this->loadView("MainController/detailsProduct.html",["product"=>$product]);
     }
 
+
+    //------------------------------------------------------------------------------------------------------------------
     #[Route('basket/add/{id}',name: 'add.basket')]
     public function addBasket($id){
         //$basket = DAO::getById(Basketdetail::class, $id, ['products']);
