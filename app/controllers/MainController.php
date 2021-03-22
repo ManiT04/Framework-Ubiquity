@@ -28,8 +28,8 @@ class MainController extends ControllerBase{
 	public function index(){
         $u=$this->_getAuthController()->_getActiveUser();
         $this->repo->byId($u->getId(),true,false,'user');
-        $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
-        $this->jquery->renderView("MainController/index.html",["promos"=>$promos]);
+        $product=DAO::getAll(Product::class,'promotion<?',false,[0]);
+        $this->jquery->renderView("MainController/index.html",["product"=>$product]);
         //$this->loadView("MainController/index.html",["promos"=>$promos]);
 	}
 
@@ -73,15 +73,18 @@ class MainController extends ControllerBase{
 
     #[Route('product/{idS}/{idP}',name: 'section')]
     public function detailsProduit($idS, $idP){
-        $section=DAO::getById(Section::class,$idS,['products']); // ??
-        $product=DAO::getById(Product::class,$idP,['products']);
+        //$section=DAO::getById(Section::class,$idS,false,['products']); // ??
+        //$product=DAO::getById(Product::class,$idP,false,['products']);
+        $section=DAO::getById(Section::class,$idS,false);
+        $product=DAO::getById(Product::class,$idP,false);
 
-        if(!URequest::isAjax()) {
+        if(!URequest::isAjax()) { //avoir le menu
             $content=$this->loadDefaultView(compact('product'),true);
             $this->store($content);
             return;
         }
-        $this->loadDefaultView(compact('product')); //pour load tous de les éléments de la classe Section
+        //$this->loadDefaultView(compact('product'),["product"=>$product]);
+        $this->loadDefaultView(["product"=>$product],["section"=>$section]);
     }
 
     #[Route('product/{id}',name: 'product')]
