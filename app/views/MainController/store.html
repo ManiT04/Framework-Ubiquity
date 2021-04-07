@@ -22,7 +22,11 @@
                         <div class="ui attached blue segment">
                             <div class="ui divided list">
                                 <div class="item">
-
+                                    {% for product in promos %}
+                                        <a data-target="#section-details" href="{{ path("section",[section.id]) }}" class="item">
+                                            {{ product.name }} <span class="ui circular label">{{ section.products|length }}</span>
+                                        </a>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

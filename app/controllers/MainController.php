@@ -29,8 +29,12 @@ class MainController extends ControllerBase{
 	public function index(){
         $u=$this->_getAuthController()->_getActiveUser();
         $this->repo->byId($u->getId(),true,false,'user');
-        $product=DAO::getAll(Product::class,'promotion<?',false,[0]);
-        $this->jquery->renderView("MainController/index.html",["product"=>$product]);
+       // $product=DAO::getAll(Product::class,'promotion<?',false,[0]);
+        $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
+
+        $recentViewedproducts = USession::get('recentViewedProducts');
+
+        $this->jquery->renderView("MainController/index.html",["product"=>$promos], ["recentViewedproducts"=>$recentViewedproducts]);
         //$this->loadView("MainController/index.html",["promos"=>$promos]);
 	}
 
@@ -40,20 +44,20 @@ class MainController extends ControllerBase{
         $this->jquery->getHref('a[data-target]','',['listenerOn'=>'body','hasLoader'=>'internal-x']);
     }
 
-    public function getRepo(): UserRepository { return $this->repo; }
+    public function getRepo(): UserRepository {
+        return $this->repo;
+    }
 
     public function setRepo(UserRepository $repo): void {
         $this->repo = $repo;
     }
 
-    protected function getAuthController(): AuthController
-    {
+    protected function getAuthController(): AuthController {
         return new MyAuth($this);
     }
 
     #[Route('store',name: 'store')]
-	public function store($content='')
-    {
+	public function store($content='') {
         $sections = DAO::getAll(Section::class, '', ['products']);
         $this->jquery->renderView('MainController/store.html', compact('sections', 'content'));
         //2eme param pour mettre chaine string et changer le contenu principal
@@ -98,20 +102,26 @@ class MainController extends ControllerBase{
     //------------------------------------------------------------------------------------------------------------------
     #[Route('basket/add/{id}',name: 'add.basket')] //panier session
     public function addBasket($id){
-        $basketDetail = new Basketdetail();
+        /*$basketDetail = new Basketdetail();
         $basketDetail->setIdBasket($id);
         $basketDetail->setQuantity(1);
         $basket = $this->getBasket();
         $basket->addBasketDetail($basketDetail);
-        USession::set('basket',$basket);
+        USession::set('basket',$basket);*/
 
+        $basket = $this->getBasket();
+        $quantity = $basket->getQuantity();
+        $basket->addProduct($id, $quantity);
     }
 
     #[Route('basket/add/{idBasket}/{idProduct}',name: 'addTo.basket')] //panier specicique
     public function addToBasket($idBasket, $idProduct){
         $basket = DAO::getById(Basketdetail::class, $idBasket, ['products']);
-        $product = DAO::getById(Product::class, $idProduct, ['products']);
+        //$product = DAO::getById(Product::class, $idProduct, ['products']);
         //$this->loadView("MainController/detailsProduct.html");
+
+        $quantity = $basket->getQuantity();
+        $basket->addProduct($idProduct, $quantity);
     }
 
 
