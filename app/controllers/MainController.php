@@ -2,6 +2,7 @@
 namespace controllers;
 use Ajax\service\JArray;
 use models\Basketdetail;
+use models\Order;
 use models\Product;
 use models\Section;
 use services\dao\UserRepository;
@@ -32,9 +33,9 @@ class MainController extends ControllerBase{
        // $product=DAO::getAll(Product::class,'promotion<?',false,[0]);
         $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
 
-        $recentViewedproducts = USession::get('recentViewedProducts');
+        //$recentViewedproducts = USession::get('recentViewedProducts');
 
-        $this->jquery->renderView("MainController/index.html",["product"=>$promos], ["recentViewedproducts"=>$recentViewedproducts]);
+        $this->jquery->renderView("MainController/index.html",["product"=>$promos]);//, ["recentViewedproducts"=>$recentViewedproducts]);
         //$this->loadView("MainController/index.html",["promos"=>$promos]);
 	}
 
@@ -59,7 +60,10 @@ class MainController extends ControllerBase{
     #[Route('store',name: 'store')]
 	public function store($content='') {
         $sections = DAO::getAll(Section::class, '', ['products']);
-        $this->jquery->renderView('MainController/store.html', compact('sections', 'content'));
+        $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
+        $recentViewedProducts = USession::get('recentViewedProducts');
+
+        $this->jquery->renderView('MainController/store.html', compact('sections', 'content','promos','recentViewedProducts'));
         //2eme param pour mettre chaine string et changer le contenu principal
     }
 
@@ -123,6 +127,25 @@ class MainController extends ControllerBase{
         $quantity = $basket->getQuantity();
         $basket->addProduct($idProduct, $quantity);
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    #[Route('basket/{id}',name: 'basket')] ///afficher le panier
+    public function basket($id){
+
+        $this->loadView("MainController/detailsBasket.html");
+
+    }
+
+    #[Route('myOrders',name: 'myOrders')]
+    public function myOrders(){
+        $orders = DAO::getAll(Order::class, '', ['orderdetails']);
+        $this->loadView("MainController/myOrders.html",compact('orders'));
+
+    }
+
+
+
 
 
 }

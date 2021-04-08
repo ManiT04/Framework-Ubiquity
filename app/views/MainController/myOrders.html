@@ -1,0 +1,42 @@
+<div class="ui attached segment"><i class="cart plus icon"></i>
+    Mes commmandes
+</div>
+<br>
+
+<div class="twelve wide stretched column" id="section-details">
+    <!--<div class="ui attached segment"><i class="shopping basket icon"></i> Store</div>-->
+    <div class="ui attached green segment">
+        <div class="ui divided list">
+            <div class="item">
+                <a class="ui teal basic floated button" href="{{ path('home') }}" >Tableau de bord</a>
+                <a href="{{ path('store') }}" class="ui basic olive button">Parcourir le store</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui attached green segment">
+    <table class="ui striped table">
+        <thead>
+        <tr>
+            <th>Date de Création</th>
+            <th>Statut</th>
+            <th>Prix</th>
+            <th>A payer</th>
+            <th>Nombre d'items</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.dateCreation}}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.amount }}</td>
+            <td>{{ order.topay }}</td>
+            <td>{{ order.itemsNumber }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

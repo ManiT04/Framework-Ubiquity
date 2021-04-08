@@ -22,11 +22,26 @@
                         <div class="ui attached blue segment">
                             <div class="ui divided list">
                                 <div class="item">
+                                    <div class="ui four column grid">
+                                        {% for product in promos %}
+                                            <div class="column">
+                                                <div class="ui segment">
+                                                    <a href="{{ path("product",[sections.id, product.id]) }}" class="item">{{ product.name }}</a><br>
+                                                    <a class="ui tag label">Prix : {{ product.price }} €</a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                <!--<div class="item">
                                     {% for product in promos %}
                                         <a data-target="#section-details" href="{{ path("section",[section.id]) }}" class="item">
                                             {{ product.name }} <span class="ui circular label">{{ section.products|length }}</span>
                                         </a>
                                     {% endfor %}
+                                </div>-->
+
+
                                 </div>
                             </div>
                         </div>
@@ -39,7 +54,16 @@
                         <div class="ui attached blue segment">
                             <div class="ui divided list">
                                 <div class="item">
-
+                                    <div class="ui four column grid">
+                                        {% for article in recentViewedProducts %}
+                                            <div class="column">
+                                                <div class="ui segment">
+                                                    <a href="{{ path("product",[sections.id, article.id]) }}" class="item">{{ article.name }}</a><br>
+                                                    <a class="ui tag label">Prix : {{ article.price }} €</a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </div>

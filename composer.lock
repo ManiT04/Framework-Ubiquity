@@ -38,16 +38,16 @@
         },
         {
             "name": "phpmv/php-mv-ui",
-            "version": "2.3.20",
+            "version": "2.3.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpMv/phpMv-UI.git",
-                "reference": "47de24027643865b4b567fe4ed67429748d63713"
+                "reference": "01600588e0e9e446c2a5d426ee18c2d06aaf20a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpMv/phpMv-UI/zipball/47de24027643865b4b567fe4ed67429748d63713",
-                "reference": "47de24027643865b4b567fe4ed67429748d63713",
+                "url": "https://api.github.com/repos/phpMv/phpMv-UI/zipball/01600588e0e9e446c2a5d426ee18c2d06aaf20a3",
+                "reference": "01600588e0e9e446c2a5d426ee18c2d06aaf20a3",
                 "shasum": ""
             },
             "require": {
@@ -98,9 +98,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpMv/phpMv-UI/issues",
-                "source": "https://github.com/phpMv/phpMv-UI/tree/2.3.20"
+                "source": "https://github.com/phpMv/phpMv-UI/tree/2.3.22"
             },
-            "time": "2021-03-06T01:42:43+00:00"
+            "time": "2021-04-04T23:54:51+00:00"
         },
         {
             "name": "phpmv/ubiquity",
@@ -705,16 +705,16 @@
         },
         {
             "name": "phpmv/ubiquity-webtools",
-            "version": "2.4.6",
+            "version": "2.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpMv/ubiquity-webtools.git",
-                "reference": "33d22a071cc2d2b4d47e99cf4be6e71aad5d4a45"
+                "reference": "0b56462d0b3cc369c6540e18f00233c610972cdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpMv/ubiquity-webtools/zipball/33d22a071cc2d2b4d47e99cf4be6e71aad5d4a45",
-                "reference": "33d22a071cc2d2b4d47e99cf4be6e71aad5d4a45",
+                "url": "https://api.github.com/repos/phpMv/ubiquity-webtools/zipball/0b56462d0b3cc369c6540e18f00233c610972cdc",
+                "reference": "0b56462d0b3cc369c6540e18f00233c610972cdc",
                 "shasum": ""
             },
             "require": {
@@ -755,9 +755,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpMv/ubiquity-webtools/issues",
-                "source": "https://github.com/phpMv/ubiquity-webtools/tree/2.4.6"
+                "source": "https://github.com/phpMv/ubiquity-webtools/tree/2.4.7"
             },
-            "time": "2021-03-07T11:59:53+00:00"
+            "time": "2021-03-28T21:19:16+00:00"
         },
         {
             "name": "psr/log",
