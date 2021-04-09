@@ -60,7 +60,7 @@ class MainController extends ControllerBase{
     #[Route('store',name: 'store')]
 	public function store($content='') {
         $sections = DAO::getAll(Section::class, '', ['products']);
-        $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
+        $promos=DAO::getAll(Product::class,'promotion<?',['section'],[0]);
         $recentViewedProducts = USession::get('recentViewedProducts');
 
         $this->jquery->renderView('MainController/store.html', compact('sections', 'content','promos','recentViewedProducts'));

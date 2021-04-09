@@ -21,6 +21,7 @@ class MyAuth extends \Ubiquity\controllers\auth\AuthController{
 			$this->_forward(implode("/",$urlParts));
 		}
 		UResponse::header('location','/');
+        //$this->_forward('/');
 	}
 
 	protected function _connect() {
