@@ -1,20 +1,45 @@
 <div class="ui attached segment"><i class="cart plus icon"></i>
-    {{ section.name }}
-    <a class="ui teal right floated button" href="{{ path('store') }}" >Retour au store</a>
+    Vos paniers
 </div><br>
 
-<div class="twelve wide stretched column">
-    <div class="ui segment" id="section-details">
-        <div  class="ui one column grid">
-            <div class="column">
-                <div  class="ui grid">
-
-                    <div class="eight wide column">
-
-                    </div>
-
-                </div>
+<div class="twelve wide stretched column" id="section-details">
+    <div class="ui attached green segment">
+        <div class="ui divided list">
+            <div class="item">
+                <a class="ui teal basic floated button" href="{{ path('home') }}" >Tableau de bord</a>
+                <a href="{{ path('store') }}" class="ui basic olive button">Parcourir le store</a>
             </div>
         </div>
     </div>
+</div>
+
+<div class="ui attached green segment">
+    <table class="ui striped table">
+        <thead>
+        <tr>
+            <th>Date de Création</th>
+            <th>Produits</th>
+            <th>Quantité</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for b in basket %}
+            <tr>
+                <td>{{ b.dateCreation}}</td>
+                <td>
+                    {% for p in b.basketdetails.product %}
+                    <li>
+                        {{ p.name }} {{ p.price }}
+                        <a class="ui teal basic floated button" href="{{ path('home') }}" >Tableau de bord</a>
+                        <LinkTo class="btn btn-primary btn-sm" @route="sections.edit" @model={{section.id}}><i class="far fa-edit"></i></LinkTo>
+                        <LinkTo class="btn btn-secondary btn-sm" @route="sections.index.confirmDelete" @model={{section.id}}><i class="far fa-trash-alt"></i></LinkTo>
+                    </li>
+                    {% endfor %}
+                </td>
+                <td>{{ b.basketdetails.quantity }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>

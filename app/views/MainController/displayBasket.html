@@ -1,0 +1,36 @@
+<div class="ui attached segment"><i class="cart plus icon"></i>
+    Vos paniers
+</div><br>
+
+<div class="twelve wide stretched column" id="section-details">
+    <div class="ui attached green segment">
+        <div class="ui divided list">
+            <div class="item">
+                <a class="ui teal basic floated button" href="{{ path('home') }}" >Tableau de bord</a>
+                <a href="{{ path('store') }}" class="ui basic olive button">Parcourir le store</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="twelve wide stretched column">
+    <div class="ui segment" id="section-details">
+        <div  class="ui one column grid">
+            <div class="column">
+                <div  class="ui grid">
+                    <div class="eight wide column">
+                        <ul>
+                            {% for basket in baskets %}
+                                <li>
+                                    <a href="{{ path('basket', [basket.id]) }}" ><i class="shopping basket icon"></i>
+                                        {{ basket.dateCreation }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

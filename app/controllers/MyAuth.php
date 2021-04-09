@@ -18,7 +18,7 @@ class MyAuth extends \Ubiquity\controllers\auth\AuthController{
 		$urlParts=$this->getOriginalURL();
 		USession::set($this->_getUserSessionKey(), $connected);
 		if(isset($urlParts)){
-			$this->_forward(implode("/",$urlParts));
+			return $this->_forward(implode("/",$urlParts));
 		}
 		UResponse::header('location','/');
         //$this->_forward('/');

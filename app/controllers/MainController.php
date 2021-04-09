@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 use Ajax\service\JArray;
+use models\Basket;
 use models\Basketdetail;
 use models\Order;
 use models\Product;
@@ -42,7 +43,9 @@ class MainController extends ControllerBase{
     public function initialize() {
         $this->ui=new UIServices($this);
         parent::initialize();
-        $this->jquery->getHref('a[data-target]','',['listenerOn'=>'body','hasLoader'=>'internal-x']);
+        /*if(!URequest::isAjax()) {
+            $this->jquery->getHref('a[data-target]', '', ['listenerOn' => 'body', 'hasLoader' => 'internal-x']);
+        }*/
     }
 
     public function getRepo(): UserRepository {
@@ -130,18 +133,23 @@ class MainController extends ControllerBase{
 
     //------------------------------------------------------------------------------------------------------------------
 
+    #[Route('displayBasket',name: 'displayBasket')] ///afficher les paniers du user
+    public function displayBasket(){
+        $baskets = DAO::getAll(Basket::class, '', ['basketdetails']);
+        $this->loadView("MainController/displayBasket.html", compact('baskets'));
+    }
+
     #[Route('basket/{id}',name: 'basket')] ///afficher le panier
     public function basket($id){
-
-        $this->loadView("MainController/detailsBasket.html");
-
+        $basket = DAO::getAll(Basket::class, $id, ['basketdetails']);
+        $this->loadView("MainController/detailsBasket.html",compact('basket'));
     }
 
     #[Route('myOrders',name: 'myOrders')]
     public function myOrders(){
-        $orders = DAO::getAll(Order::class, '', ['orderdetails']);
+        //$orders = DAO::getAll(Order::class, '', ['orderdetails']);
+        $orders = DAO::getAll(Order::class,false, false);
         $this->loadView("MainController/myOrders.html",compact('orders'));
-
     }
 
 
