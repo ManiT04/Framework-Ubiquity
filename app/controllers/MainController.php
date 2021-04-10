@@ -187,4 +187,9 @@ class MainController extends ControllerBase{
 
     }
 
+    #[Route('newBasket',name: 'new.basket')]
+    public function newBasket(){
+
+    }
+
 }
