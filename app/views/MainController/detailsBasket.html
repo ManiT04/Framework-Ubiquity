@@ -20,26 +20,37 @@
             <th>Date de Création</th>
             <th>Produits</th>
             <th>Quantité</th>
+            <th>Prix</th>
+            <th></th>
         </tr>
         </thead>
 
         <tbody>
-        {% for b in basket %}
-            <tr>
-                <td>{{ b.dateCreation}}</td>
+        <tr>
+            <td>{{ basket.dateCreation }}</td>
+
+            {% for bd in basket.basketdetails %}
                 <td>
-                    {% for p in b.basketdetails.product %}
                     <li>
-                        {{ p.name }} {{ p.price }}
-                        <a class="ui teal basic floated button" href="{{ path('home') }}" >Tableau de bord</a>
-                        <LinkTo class="btn btn-primary btn-sm" @route="sections.edit" @model={{section.id}}><i class="far fa-edit"></i></LinkTo>
-                        <LinkTo class="btn btn-secondary btn-sm" @route="sections.index.confirmDelete" @model={{section.id}}><i class="far fa-trash-alt"></i></LinkTo>
+                        <a href="{{ path('product', [basket.id, bd.product.id]) }}">
+                            {{ bd.product.name }}
+                        </a>
                     </li>
-                    {% endfor %}
                 </td>
-                <td>{{ b.basketdetails.quantity }}</td>
-            </tr>
-        {% endfor %}
+                <td>
+                    {{ bd.quantity }}
+                </td>
+                <td>
+                    {{ bd.product.price }} €
+                </td>
+
+
+            <td>
+                <a href="{{ path('editProduct', [basket.id, bd.product.id]) }}" class="tiny basic ui olive button"><i class="edit icon"></i></a>
+                <a href="{{ path('deleteProduct', [basket.id, bd.product.id]) }}" class="tiny basic ui olive basic button"><i class="trash alternate icon"></i></a>
+            </td>
+            {% endfor %}
+        </tr>
         </tbody>
     </table>
 </div>

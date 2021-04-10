@@ -20,7 +20,7 @@
                 <div  class="ui grid">
                     <div class="eight wide column">
                         <ul>
-                            {% for basket in baskets %}
+                            {% for basket in myBaskets %}
                                 <li>
                                     <a href="{{ path('basket', [basket.id]) }}" ><i class="shopping basket icon"></i>
                                         {{ basket.dateCreation }}

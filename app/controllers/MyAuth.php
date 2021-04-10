@@ -1,5 +1,7 @@
 <?php
 namespace controllers;
+use classes\BasketSession;
+use models\Basket;
 use models\User;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
@@ -20,11 +22,11 @@ class MyAuth extends \Ubiquity\controllers\auth\AuthController{
 		if(isset($urlParts)){
 			return $this->_forward(implode("/",$urlParts));
 		}
+        USession::set('recentViewedproducts',[]);
 		UResponse::header('location','/');
-        //$this->_forward('/');
 	}
 
-	protected function _connect() {
+	/*protected function _connect() {
 		if(URequest::isPost()){
 			$email=URequest::post($this->_getLoginInputName());
 			if($email!=null) {
@@ -37,8 +39,45 @@ class MyAuth extends \Ubiquity\controllers\auth\AuthController{
             }
 		}
 		return;
-	}
-	
+	}*/
+    protected function _connect()
+    {
+        if (URequest::isPost())
+        {
+            $email = URequest::post($this->_getLoginInputName());
+
+            if ($email != null)
+            {
+                $password = URequest::post($this->_getPasswordInputName());
+                $user = DAO::getOne(User::class, 'email= ?', false, [$email]);
+                if (isset($user) && $user->getPassword() == $password)
+                {
+                    USession::set('idUser', $user->getName());
+                    $basket = DAO::getOne(Basket::class, 'name = ?', false, ['_default']);
+                    if (!$basket)
+                    {
+                        $basket = new Basket();
+                        $basket->setName('_default');
+                        $basket->setUser($user);
+                        if (DAO::save($basket))
+                        {
+                            $LocalBasket = new BasketSession(DAO::getOne(Basket::class, 'name = ?', false, ['_default']));
+                            USession::set('defaultBasket', $LocalBasket);
+                            return $user;
+                        } else {
+                            echo "BDD erreur user";
+                        }
+                    } else {
+                        $LocalBasket = new BasketSession($basket);
+                        USession::set('defaultBasket', $LocalBasket);
+                        return $user;
+                    }
+                }
+            }
+        }
+    }
+
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Ubiquity\controllers\auth\AuthController::isValidUser()

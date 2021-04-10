@@ -48,10 +48,11 @@ class BasketSession
         return $baskets->getBasketdetails();
     }
 
-    //ok
     public function clearBasket()
     {
-        if($res=DAO::deleteAll(Basketdetail::class, 'id = ?',[$this->idBasket])){
+        echo $this->idBasket;
+        if($res=DAO::deleteAll(Basketdetail::class, 'idBasket = ?',[$this->idBasket])){
+            $this->jslog("Produit supprimé");
             return $res;
         }
         return -1;
@@ -64,6 +65,14 @@ class BasketSession
         $basketdetail->setQuantity($quantity);
         if(DAO::save($basketdetail)){
             return 1;
+        }
+        return -1;
+    }
+
+    public function deleteAnArticle($id)
+    {
+        if($res=DAO::delete(Basketdetail::class, $id)){
+            return $res;
         }
         return -1;
     }

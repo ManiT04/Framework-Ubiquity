@@ -15,6 +15,7 @@ use Ubiquity\controllers\auth\WithAuthTrait;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
+use classes\BasketSession;
 
 /**
  * Controller MainController
@@ -34,9 +35,7 @@ class MainController extends ControllerBase{
        // $product=DAO::getAll(Product::class,'promotion<?',false,[0]);
         $promos=DAO::getAll(Product::class,'promotion<?',false,[0]);
 
-        //$recentViewedproducts = USession::get('recentViewedProducts');
-
-        $this->jquery->renderView("MainController/index.html",["product"=>$promos]);//, ["recentViewedproducts"=>$recentViewedproducts]);
+        $this->jquery->renderView("MainController/index.html",["product"=>$promos]);
         //$this->loadView("MainController/index.html",["promos"=>$promos]);
 	}
 
@@ -95,7 +94,7 @@ class MainController extends ControllerBase{
     }
 //------------------------------------------------Test------------------------------------------------------------------
     #[Route('productTest/{id}',name: 'productTest')]
-    public function product($id){
+    public function productTest($id){
         $product = DAO::getById(Product::class, $id, false);
         if(!URequest::isAjax()) { //avoir le menu
             $content=$this->loadView("MainController/detailsProduct.html",compact('product'),true);
@@ -106,7 +105,8 @@ class MainController extends ControllerBase{
     }
 
 
-    //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------Ajout de produit dans un panier-------------------------------------------
+
     #[Route('basket/add/{id}',name: 'add.basket')] //panier session
     public function addBasket($id){
         /*$basketDetail = new Basketdetail();
@@ -116,44 +116,69 @@ class MainController extends ControllerBase{
         $basket->addBasketDetail($basketDetail);
         USession::set('basket',$basket);*/
 
-        $basket = $this->getBasket();
-        $quantity = $basket->getQuantity();
-        $basket->addProduct($id, $quantity);
+        $product = DAO::getById(Product::class, $id, false);
+        $localBasket = USession::get('defaultBasket');
+        $localBasket->addProduct($product, 1);
+
     }
 
-    #[Route('basket/add/{idBasket}/{idProduct}',name: 'addTo.basket')] //panier specicique
+    #[Route('basket/addTo/{idBasket}/{idProduct}',name: 'addTo.basket')] //panier specifique
     public function addToBasket($idBasket, $idProduct){
-        $basket = DAO::getById(Basketdetail::class, $idBasket, ['products']);
         //$product = DAO::getById(Product::class, $idProduct, ['products']);
         //$this->loadView("MainController/detailsProduct.html");
 
+        $basket = DAO::getById(Basketdetail::class, $idBasket, ['products']);
         $quantity = $basket->getQuantity();
         $basket->addProduct($idProduct, $quantity);
     }
 
-    //------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------Affichage panier/commande----------------------------------------------
 
     #[Route('displayBasket',name: 'displayBasket')] ///afficher les paniers du user
     public function displayBasket(){
-        $baskets = DAO::getAll(Basket::class, '', ['basketdetails']);
-        $this->loadView("MainController/displayBasket.html", compact('baskets'));
+        $u=$this->_getAuthController()->_getActiveUser();
+        $myBaskets=DAO::getAll(Basket::class,'idUser= ?',['basketdetails.product'],[$u->getId()]);
+        //$baskets = DAO::getAll(Basket::class, '', ['basketdetails']);
+
+        $this->loadView("MainController/displayBasket.html", compact('myBaskets'));
     }
 
     #[Route('basket/{id}',name: 'basket')] ///afficher le panier
     public function basket($id){
-        $basket = DAO::getAll(Basket::class, $id, ['basketdetails']);
+        $basket = DAO::getById(Basket::class, $id, ['basketdetails.product']);
         $this->loadView("MainController/detailsBasket.html",compact('basket'));
     }
 
     #[Route('myOrders',name: 'myOrders')]
     public function myOrders(){
         //$orders = DAO::getAll(Order::class, '', ['orderdetails']);
-        $orders = DAO::getAll(Order::class,false, false);
+        //$orders = DAO::getAll(Order::class,false, false);
+        $u=$this->_getAuthController()->_getActiveUser();
+        $orders=DAO::getAll(Order::class,'idUser= ?',['orderdetails.product'],[$u->getId()]);
+
         $this->loadView("MainController/myOrders.html",compact('orders'));
     }
 
+    //------------------------------------------------------------------------------------------------------------------
 
+    #[Route('product/{idBasket}/{idProduct}',name: 'product')]
+    public function product($idBasket,$idProduct){
+        $product = DAO::getById(Product::class, $idProduct, false);
+        $basket = DAO::getById(Product::class, $idBasket, false);
+        $this->loadView("MainController/detailsProduct.html",["product"=>$product, "basket"=>$basket]);
+    }
 
+    #[Route('deleteProduct/{idBasket}/{idProduct}',name: 'deleteProduct')]
+    public function deleteProduct($idBasket,$idProduct){
+        $res=DAO::deleteAll(Product::class,'idProduct = ? and idBasket = ?',[$idProduct,$idBasket]);
+        if($res) {
+            $this->loadView("MainController/confirmDelete.html");
+        }
+    }
 
+    #[Route('editProduct/{idBasket}/{idProduct}',name: 'editProduct')]
+    public function editProduct($idBasket,$idProduct){
+
+    }
 
 }
