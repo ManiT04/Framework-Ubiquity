@@ -1,11 +1,11 @@
-# tds
+# Projet Ubiquity - Module M4102C_2
 
-This README outlines the details of collaborating on this Ubiquity application.
-A short introduction of this app could easily go here.
+Ce projet consiste à faire une application web permettant aux clients de préparer leurs commandes en ligne et de convenir d'un moment pour venir les chercher (app full-stack Ubiquity). Cette application se base sur le framework Ubiquity, qui est un framework open source php. Il s'appuie sur une architecture de type MVC (modèle-vue-contrôleur), c'est également le framework php fullstack le plus performant. Il est également plus simple que certains frameworks php.
+https://slamwiki2.kobject.net/backoffice/ubiquity/td4#mpd_de_la_base_de_donnees (modèle physique de données)
 
-## Prerequisites
+## Prerequis
 
-You will need the following things properly installed on your computer.
+Vous aurez besoin des éléments suivants correctement installés sur votre ordinateur.
 
 * php >=7.4
 * [Git](https://git-scm.com/)
@@ -14,30 +14,35 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
+* `git clone <repository-url>` ce repository
 * `cd tds`
 * `composer install`
 
-## Running / Development
+## Lancement / Developpement
 
 * `Ubiquity serve`
-* Visit your app at [http://127.0.0.1:8090](http://127.0.0.1:8090).
+* Visitez votre application à cette adresse : [http://127.0.0.1:8090](http://127.0.0.1:8090).
 
-### devtools
+## Principe et fonctionnement
 
-Make use of the many generators for code, try `Ubiquity help` for more details
+Pour ce projet, ce qu'on utilise principalement sont les controllers associés à des vues. Les vues correspondent à l'aspect visuel de la page, et le controller va faire l'action et contenir toutes les routes du projet. POur définir une route, il faut ajouter l'entête : `#[Route('newRoute',name: 'new.route')]`. Les controller et les routes peuvent s'ajouter également à partir de l'interface utilisateur à l'adresse : http://127.0.0.1:8090/Admin
+* Quelques commandes : 
+* Ubiquity controller new-controller : pour créer un controller, l(option `-v` permet de créer une vue avec.
+* Ubiquity action MainController.information -p=title,message='nothing' -r=info/{title}/{message} -v : cet exemple crée une action (information) avec deux paramètres (titre et message), et une vue pour afficher le message
 
-### Optimization for production
 
-Run:
-`composer install --optimize --no-dev --classmap-authoritative`
+## En cas d'erreur ...
 
-### Deploying
+* Faire un `composer require phpmv/ubiquity:dev-master` pour mettre à jour Ubiquity et éviter certains problèmes.
+* `Ubiquity init-cache`, quand on crée de nouvelles routes.
 
-Specify what it takes to deploy your app.
+## Liens utiles
 
-## Further Reading / Useful Links
-
+* https://slamwiki2.kobject.net/backoffice/ubiquity
+  * https://slamwiki2.kobject.net/backoffice/ubiquity/td4
+  * https://slamwiki2.kobject.net/backoffice/ubiquity/td5
+  * https://slamwiki2.kobject.net/backoffice/ubiquity/td6
+  
 * [Ubiquity website](https://ubiquity.kobject.net/)
 * [Guide](http://micro-framework.readthedocs.io/en/latest/?badge=latest)
 * [Doc API](https://api.kobject.net/ubiquity/)
