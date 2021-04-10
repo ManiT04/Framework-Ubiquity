@@ -81,7 +81,8 @@ class MainController extends ControllerBase{
     }
 
     #[Route('product/{idS}/{idP}',name: 'product')]
-    public function detailsProduit($idS, $idP){
+    //public function detailsProduit($idS, $idP){
+    public function product($idS, $idP){
         $section=DAO::getById(Section::class,$idS,false);
         $product=DAO::getById(Product::class,$idP,false);
 
@@ -161,12 +162,12 @@ class MainController extends ControllerBase{
 
     //------------------------------------------------------------------------------------------------------------------
 
-    #[Route('product/{idBasket}/{idProduct}',name: 'product')]
+    /*#[Route('product/{idBasket}/{idProduct}',name: 'product')]
     public function product($idBasket,$idProduct){
         $product = DAO::getById(Product::class, $idProduct, false);
         $basket = DAO::getById(Product::class, $idBasket, false);
         $this->loadView("MainController/detailsProduct.html",["product"=>$product, "basket"=>$basket]);
-    }
+    }*/
 
     #[Route('deleteProduct/{idBasket}/{idProduct}',name: 'deleteProduct')]
     public function deleteProduct($idBasket,$idProduct){
@@ -178,6 +179,11 @@ class MainController extends ControllerBase{
 
     #[Route('editProduct/{idBasket}/{idProduct}',name: 'editProduct')]
     public function editProduct($idBasket,$idProduct){
+
+    }
+
+    #[Route('basket/validate/{id}',name: 'basket.validate')]
+    public function validateBasket($id){
 
     }
 
