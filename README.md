@@ -39,18 +39,18 @@ Pour ce projet, ce qu'on utilise principalement sont les controllers associés �
 ## Non implémenté 
 
 * Sprint 1 non complet :
- * basket/add/{idProduct} ⇒ Ajouter un produit au panier
- * basket/addTo/{idBasket}/{idProduct} ⇒ Ajouter un produit à un panier spécifique
- * La section "Consultés récemment" n'affiche pas les produits comme demandé
+  * basket/add/{idProduct} ⇒ Ajouter un produit au panier
+  * basket/addTo/{idBasket}/{idProduct} ⇒ Ajouter un produit à un panier spécifique
+  * La section "Consultés récemment" n'affiche pas les produits comme demandé
  
 * Sprint 2 non complet :
- * basket ⇒ Modifier la quantité d'un produit
- * basket/validate ⇒ Valide le panier
+  * basket ⇒ Modifier la quantité d'un produit
+  * basket/validate ⇒ Valide le panier
   * Affiche le montant de la commande
-  * Affiche la liste des timeSlots disponibles dans les prochains jours
-  * Lien vers basket/timeslot/{idTimeslot} ⇒ Choisir un timeSlot
-  * Lien vers basket/command ⇒ Valider la commande
-  * Lien vers basket/clear ⇒ Vider le panier
+   * Affiche la liste des timeSlots disponibles dans les prochains jours
+   * Lien vers basket/timeslot/{idTimeslot} ⇒ Choisir un timeSlot
+   * Lien vers basket/command ⇒ Valider la commande
+   * Lien vers basket/clear ⇒ Vider le panier
 
 ## Liens utiles
 
